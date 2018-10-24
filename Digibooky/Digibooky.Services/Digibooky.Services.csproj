@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Digibooky.Database\Digibooky.Databases.csproj" />
+    <ProjectReference Include="..\Digibooky.Domain\Digibooky.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
