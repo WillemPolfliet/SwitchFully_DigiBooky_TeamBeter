@@ -3,12 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.Text;
+using System.Text.RegularExpressions;
 using static Digibooky.Domain.Users.User;
 
 namespace Digibooky.Domain.Users
 {
     public class UserBuilder 
     {
+        private const int REQUIRED_PASSWORD_LENGTH = 8;
         public long INSS { get; private set; } //long or string?
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
@@ -87,6 +89,20 @@ namespace Digibooky.Domain.Users
         public UserBuilder WithPassword(string password)
         {
             //TODO password rules and required
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                throw new UserException("Password is required");
+            }
+            if(password.Length < REQUIRED_PASSWORD_LENGTH)
+            {
+                throw new UserException($"Password must contain at least {REQUIRED_PASSWORD_LENGTH} characters");
+            }
+            if(!Regex.Match(password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]").Success)
+            {
+                throw new UserException("The password is not valid. It should contain at least one uppercase character, one lowercase character and one digit");
+            }
+
+
             this.Password= password;
             return this;
         }

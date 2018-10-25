@@ -38,16 +38,6 @@ namespace Digibooky.Services.DatabaseServices
             return listOfLinesToReturn;
         }
 
-        public static void WriteLineToTxtFile()
-        {
-            AuthorsDatabase.authorsDb.Add()
-        }
-
-
-
-
-
-
         private static void ReadDatabaseFileOfAuthors(string fileName)
         {
             var listOfLines = ReadLinesFromTxtFile("Authors", fileName);
