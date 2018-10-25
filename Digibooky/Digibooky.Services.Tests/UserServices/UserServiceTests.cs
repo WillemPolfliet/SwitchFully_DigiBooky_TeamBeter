@@ -32,7 +32,7 @@ namespace Digibooky.Services.Tests.UserServices
 
             var actual = userService.GetAll();
 
-            Assert.Single(actual);
+            Assert.IsType<List<User>>(actual);
         }
 
 
