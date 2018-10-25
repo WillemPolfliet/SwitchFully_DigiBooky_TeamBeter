@@ -1,3 +1,4 @@
+isbn;title;authorId
 9789024555147;Het Franciscus Verbond;1
 9789028418028;Wereldbibliotheekreeks Verloren eer;2
 9789021006536;Drie weken in Parijs;3

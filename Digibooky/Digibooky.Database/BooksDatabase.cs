@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Digibooky.Databases.Books
+namespace Digibooky.Databases
 {
     public static class BooksDatabase
     {
