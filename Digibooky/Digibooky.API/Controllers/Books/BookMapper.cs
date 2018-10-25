@@ -1,4 +1,6 @@
-﻿using Digibooky.API.Controllers.Books.Interfaces;
+﻿using Digibooky.API.Controllers.Authors;
+using Digibooky.API.Controllers.Authors.Interfaces;
+using Digibooky.API.Controllers.Books.Interfaces;
 using Digibooky.Domain.Books;
 using System;
 using System.Collections.Generic;
@@ -16,19 +18,21 @@ namespace Digibooky.API.Controllers.Books
 
             foreach (var book in givenListOfBooks)
             {
-                dtos.Add(ToDTO(book));
+                dtos.Add(BookToDTO(book));
             }
 
             return dtos;
         }
 
-        public BookDTO ToDTO(Book givenBook)
+        public BookDTO BookToDTO(Book givenBook)
         {
+            AuthorMapper authorMapper = new AuthorMapper();
+
             return new BookDTO
             {
                 Isbn = givenBook.Isbn,
                 Title = givenBook.Title,
-                Author = givenBook.Author
+                AuthorDTO = authorMapper.AuthorToDTO(givenBook.Author)
             };
         }
     }
