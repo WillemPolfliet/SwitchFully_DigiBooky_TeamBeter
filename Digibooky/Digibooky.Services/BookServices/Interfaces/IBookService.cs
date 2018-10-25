@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Digibooky.Services.BookServices
+namespace Digibooky.Services.BookServices.Interfaces
 {
-    interface IBookService
+    public interface IBookService
     {
         List<Book> GetAllBooks();
     }

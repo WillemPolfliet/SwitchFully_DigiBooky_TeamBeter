@@ -14,9 +14,9 @@ namespace Digibooky.API.Controllers.Users
         {
             var userRole = (Roles)Enum.Parse(typeof(Roles), userDTORegister.UserRole);
 
-            var user = new User(userDTORegister.INSS, userDTORegister.FirstName, userDTORegister.LastName, 
-                userDTORegister.Email, 
-                userDTORegister.Password, userRole, userDTORegister.Street, 
+            var user = new User(userDTORegister.INSS, userDTORegister.FirstName, userDTORegister.LastName,
+                userDTORegister.Email,
+                userDTORegister.Password, userRole, userDTORegister.Street,
                 userDTORegister.StreetNumber, userDTORegister.PostalCode, userDTORegister.City);
 
             return user;
