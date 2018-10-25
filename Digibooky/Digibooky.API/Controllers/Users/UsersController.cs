@@ -40,15 +40,9 @@ namespace Digibooky.API.Controllers.Users
         }
 
         [HttpGet]
-        public ActionResult<List<UserDTO>> GetAll()
+        public ActionResult<List<UserDTO>> GetAllUsers()
         {
-            //TODO method in Mapper
-            var dtoList = new List<UserDTO>();
-            foreach (var user in _userService.GetAll())
-            {
-                dtoList.Add(_userMapper.UserToDTO(user));
-            }
-            return dtoList;
+            return Ok(_userMapper.ListofUserToDTOList(_userService.GetAllUsers()));
         }
     }
 }
