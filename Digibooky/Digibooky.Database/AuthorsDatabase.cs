@@ -10,6 +10,5 @@ namespace Digibooky.Databases.Authors
     {
         public static List<Author> authorsDb = new List<Author>();
 
-
     }
 }
