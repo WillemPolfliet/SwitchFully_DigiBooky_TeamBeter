@@ -18,9 +18,9 @@ namespace Digibooky.Services.DatabaseServices
                 ReadDatabaseFileOfAuthors("uniqueAuthorsWithId.txt");
                 ReadDatabaseFileOfBooks("uniqueBooksWithAuthorId.txt");
             }
-            catch
+            catch (Exception ex)
             {
-                throw new Exception();
+                throw new Exception(ex.Message);
             }
         }
 
@@ -28,7 +28,10 @@ namespace Digibooky.Services.DatabaseServices
         {
             List<string> listOfLinesToReturn = new List<string>();
 
-            using (StreamReader reader = new StreamReader(File.Open(Path.Combine(@"..\Digibooky.Database\DB_InFiles", fileName), FileMode.OpenOrCreate)))
+            var wantedPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            var wantedFile = Path.Combine(wantedPath, "DB_InFiles", fileName);
+
+            using (StreamReader reader = new StreamReader(File.Open(wantedFile, FileMode.OpenOrCreate)))
             {
                 string[] lines = reader.ReadToEnd().Split("\r\n");
                 listOfLinesToReturn.AddRange(lines);
