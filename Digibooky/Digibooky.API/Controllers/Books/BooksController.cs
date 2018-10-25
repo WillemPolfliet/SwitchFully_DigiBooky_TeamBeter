@@ -29,5 +29,22 @@ namespace Digibooky.API.Controllers.Books
         {
             return Ok(_bookMapper.ListofBookToDTOObject(_bookService.GetAllBooks()));
         }
+
+        [HttpGet]
+        [Route("ShowDetailsOfSingleBook/{ISBN}")]
+        public ActionResult<BookDTO> ShowDetailsOfSingleBook(string ISBN)
+        {
+            try
+            {
+                var selectedBook = _bookService.GetBookByISBN(ISBN);
+                return Ok(_bookMapper.BookToDTO(selectedBook));
+
+            }
+            catch (Exception bookEx)
+            {
+                return BadRequest(bookEx.Message);
+            }
+
+        }
     }
 }

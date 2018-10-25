@@ -8,5 +8,6 @@ namespace Digibooky.Services.BookServices.Interfaces
     public interface IBookService
     {
         List<Book> GetAllBooks();
+        Book GetBookByISBN(string givenISBN);
     }
 }
