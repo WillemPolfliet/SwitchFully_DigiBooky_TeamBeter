@@ -9,6 +9,6 @@ namespace Digibooky.API.Controllers.Books.Interfaces
     public interface IBookMapper
     {
         List<BookDTO> ListofBookToDTOObject(List<Book> givenListOfBooks);
-        BookDTO ToDTO(Book givenBook);
+        BookDTO BookToDTO(Book givenBook);
     }
 }

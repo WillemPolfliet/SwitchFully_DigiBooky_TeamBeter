@@ -1,4 +1,5 @@
 ﻿
+using Digibooky.API.Controllers.Authors;
 using Digibooky.Domain.Authors;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Digibooky.API.Controllers.Books
     {
         public string Isbn { get; set; }
         public string Title { get; set; }
-        public Author Author { get; set; }
+        public AuthorDTO AuthorDTO { get; set; }
 
     }
 }
