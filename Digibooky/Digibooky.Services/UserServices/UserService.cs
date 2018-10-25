@@ -9,7 +9,7 @@ namespace Digibooky.Services.UserServices
 {
     public class UserService : IUserService
     {
-        public List<User> GetAll()
+        public List<User> GetAllUsers()
         {
             return UsersDatabase.users;
         }

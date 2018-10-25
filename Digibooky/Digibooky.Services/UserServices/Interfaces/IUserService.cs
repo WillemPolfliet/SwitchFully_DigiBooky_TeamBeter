@@ -8,6 +8,6 @@ namespace Digibooky.Services.UserServices.Interfaces
     public interface IUserService
     {
         void Register(User user);
-        List<User> GetAll();
+        List<User> GetAllUsers();
     }
 }

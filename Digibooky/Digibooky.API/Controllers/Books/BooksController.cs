@@ -27,7 +27,7 @@ namespace Digibooky.API.Controllers.Books
         [HttpGet]
         public ActionResult<List<BookDTO>> GetAllBooks()
         {
-            return Ok(_bookMapper.ListofBookToDTOObject(_bookService.GetAllBooks()));
+            return Ok(_bookMapper.ListofBookToDTOList(_bookService.GetAllBooks()));
         }
 
         [HttpGet]

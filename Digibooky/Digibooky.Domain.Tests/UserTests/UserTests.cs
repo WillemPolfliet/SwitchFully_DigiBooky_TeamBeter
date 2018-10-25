@@ -91,7 +91,69 @@ namespace Digibooky.Domain.Tests.UserTests
             var exception = Assert.Throws<UserException>(act);
 
             Assert.Equal("Emailformat must be word@word.word", exception.Message);
+        }
 
+        [Fact]
+        public void GivenUserData_WhenPasswordIsBlank_ThenThrowException()
+        {
+            Action act = () => UserBuilder.CreateUser()
+                .WithINSS(1234567891234)
+                .WithFirstName("Firstname")
+                .WithLastName("Lastname")
+                .WithEmail("user@user.com")
+                .WithPassword("")
+                .WithRole(User.Roles.member)
+                .WithStreet("Street")
+                .WithStreetNumber("5A")
+                .WithPostalCode(2800)
+                .WithCity("Mechelen")
+                .Build();
+
+            var exception = Assert.Throws<UserException>(act);
+
+            Assert.Equal("Password is required", exception.Message);
+        }
+
+        [Fact]
+        public void GivenUserData_WhenPasswordTooShort_ThenThrowException()
+        {
+            Action act = () => UserBuilder.CreateUser()
+                .WithINSS(1234567891234)
+                .WithFirstName("Firstname")
+                .WithLastName("Lastname")
+                .WithEmail("user@user.com")
+                .WithPassword("Passwo1")
+                .WithRole(User.Roles.member)
+                .WithStreet("Street")
+                .WithStreetNumber("5A")
+                .WithPostalCode(2800)
+                .WithCity("Mechelen")
+                .Build();
+
+            var exception = Assert.Throws<UserException>(act);
+
+            Assert.Equal("Password must contain at least 8 characters", exception.Message);
+        }
+
+        [Fact]
+        public void GivenUserData_WhenPasswordWrongFormat_ThenThrowException()
+        {
+            Action act = () => UserBuilder.CreateUser()
+                .WithINSS(1234567891234)
+                .WithFirstName("Firstname")
+                .WithLastName("Lastname")
+                .WithEmail("user@user.com")
+                .WithPassword("password123")
+                .WithRole(User.Roles.member)
+                .WithStreet("Street")
+                .WithStreetNumber("5A")
+                .WithPostalCode(2800)
+                .WithCity("Mechelen")
+                .Build();
+
+            var exception = Assert.Throws<UserException>(act);
+
+            Assert.Equal("The password is not valid. It should contain at least one uppercase character, one lowercase character and one digit", exception.Message);
         }
 
         [Fact]
