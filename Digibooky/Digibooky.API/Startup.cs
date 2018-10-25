@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Digibooky.API.Controllers.Users;
 using Digibooky.API.Controllers.Users.Interfaces;
+using Digibooky.Services.DatabaseServices;
 using Digibooky.Services.UserServices;
 using Digibooky.Services.UserServices.Interfaces;
 using Microsoft.AspNetCore.Builder;

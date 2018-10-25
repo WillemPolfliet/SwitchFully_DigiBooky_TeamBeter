@@ -1,4 +1,5 @@
 ﻿using Digibooky.Databases;
+using Digibooky.Databases.Books;
 using Digibooky.Domain.Authors;
 using Digibooky.Domain.Books;
 using Digibooky.Services.BookServices;
@@ -16,10 +17,10 @@ namespace Digibooky.Services.Tests.BookServices
         {
             var temp = new List<Book>()
                 {
-                    new Book("ISBN-152365214", "DefaultTitle", new Author("DefaultName", "DefaultLastName")),
-                    new Book("ISBN-152365214", "DefaultTitle", new Author("DefaultName", "DefaultLastName")),
-                    new Book("ISBN-152365214", "DefaultTitle", new Author("DefaultName", "DefaultLastName")),
-                    new Book("ISBN-152365214", "DefaultTitle", new Author("DefaultName", "DefaultLastName"))
+                    new Book("ISBN-152365214", "DefaultTitle", new Author(0, "DefaultName", "DefaultLastName")),
+                    new Book("ISBN-152365214", "DefaultTitle", new Author(0, "DefaultName", "DefaultLastName")),
+                    new Book("ISBN-152365214", "DefaultTitle", new Author(0, "DefaultName", "DefaultLastName")),
+                    new Book("ISBN-152365214", "DefaultTitle", new Author(0, "DefaultName", "DefaultLastName"))
                 };
             BooksDatabase.booksDb.AddRange(temp);
             BookService bookservice = new BookService();
