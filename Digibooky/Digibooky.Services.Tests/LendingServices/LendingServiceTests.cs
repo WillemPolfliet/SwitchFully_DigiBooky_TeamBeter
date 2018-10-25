@@ -1,11 +1,10 @@
 ﻿using Digibooky.Databases;
+using Digibooky.Services.DatabaseServices;
+using Digibooky.Services.LendingServices;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
-using Digibooky.Services.LendingServices;
-using Digibooky.Databases.Books;
-using Digibooky.Services.DatabaseServices;
 
 namespace Digibooky.Services.Tests.LendingServices
 {
