@@ -9,6 +9,11 @@ namespace Digibooky.Services.UserServices
 {
     public class UserService : IUserService
     {
+        public List<User> GetAll()
+        {
+            return UsersDatabase.users;
+        }
+
         public void Register(User user)
         {
             UsersDatabase.users.Add(user);

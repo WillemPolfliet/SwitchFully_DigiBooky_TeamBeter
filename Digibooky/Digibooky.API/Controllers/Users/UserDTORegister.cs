@@ -7,15 +7,15 @@ namespace Digibooky.API.Controllers.Users
 {
     public class UserDTORegister
     {
-        public long INSS { get; private set; }
-        public string FirstName { get; private set; }
-        public string LastName { get; private set; }
-        public string Email { get; private set; }
-        public string Password { get; private set; }
-        public string UserRole { get; private set; }
-        public string Street { get; private set; }
-        public string StreetNumber { get; private set; }
-        public int PostalCode { get; private set; }
-        public string City { get; private set; }
+        public long INSS { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string UserRole { get; set; }
+        public string Street { get; set; }
+        public string StreetNumber { get; set; }
+        public int PostalCode { get; set; }
+        public string City { get; set; }
     }
 }

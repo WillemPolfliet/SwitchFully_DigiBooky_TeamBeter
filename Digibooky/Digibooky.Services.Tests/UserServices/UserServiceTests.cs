@@ -24,5 +24,17 @@ namespace Digibooky.Services.Tests.UserServices
 
             Assert.True(actual);
         }
+
+        [Fact]
+        public void GivenUserDataBase_WhenGetAll_ThenAllUsersAreReturned()
+        {
+            UserService userService = new UserService();
+
+            var actual = userService.GetAll();
+
+            Assert.Single(actual);
+        }
+
+
     }
 }

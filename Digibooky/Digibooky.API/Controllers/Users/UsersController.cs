@@ -24,10 +24,16 @@ namespace Digibooky.API.Controllers.Users
         }
 
         [HttpPost]
-        public ActionResult<User> Register([FromBody] UserDTORegister userToRegister)
+        public ActionResult<User> Register([FromBody]UserDTORegister userToRegister)
         {
             _userService.Register(_userMapper.DTORegisterToUser(userToRegister));
             return Ok();
+        }
+
+        [HttpGet]
+        public ActionResult<List<User>> GetAll()
+        {
+            return _userService.GetAll();
         }
     }
 }
