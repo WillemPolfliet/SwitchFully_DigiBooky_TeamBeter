@@ -38,10 +38,7 @@ namespace Digibooky.Services.DatabaseServices
             return listOfLinesToReturn;
         }
 
-        public static void WriteLineToTxtFile()
-        {
-            AuthorsDatabase.authorsDb.Add()
-        }
+
 
 
 
