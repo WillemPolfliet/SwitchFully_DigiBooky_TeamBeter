@@ -1,5 +1,4 @@
-﻿using Digibooky.Databases.Authors;
-using Digibooky.Databases.Books;
+﻿using Digibooky.Databases;
 using Digibooky.Domain.Authors;
 using Digibooky.Domain.Books;
 using System;
@@ -25,12 +24,11 @@ namespace Digibooky.Services.DatabaseServices
             }
         }
 
-        private static List<string> ReadLinesFromTxtFile(string folder, string fileName)
+        private static List<string> ReadLinesFromTxtFile(string fileName)
         {
             List<string> listOfLinesToReturn = new List<string>();
 
-            var dir = Path.Combine(@"..\Digibooky.Database", folder);
-            using (StreamReader reader = new StreamReader(File.Open(Path.Combine(dir, fileName), FileMode.OpenOrCreate)))
+            using (StreamReader reader = new StreamReader(File.Open(Path.Combine(@"..\Digibooky.Database\DB_InFiles", fileName), FileMode.OpenOrCreate)))
             {
                 string[] lines = reader.ReadToEnd().Split("\r\n");
                 listOfLinesToReturn.AddRange(lines);
@@ -39,52 +37,56 @@ namespace Digibooky.Services.DatabaseServices
         }
 
 
-
-
-
-
-
-
         private static void ReadDatabaseFileOfAuthors(string fileName)
         {
-            var listOfLines = ReadLinesFromTxtFile("Authors", fileName);
+            var listOfLines = ReadLinesFromTxtFile(fileName);
 
-            foreach (string line in listOfLines)
+            for (int i = 0; i < listOfLines.Count; i++)
             {
-                string[] fields = line.Split(";");
+                if (i == 0)
+                { continue; }
+                if (i == listOfLines.Count - 1)
+                { continue; }
+
+                string[] fields = listOfLines[i].Split(";");
                 if (fields.Length != 3)
-                { break; }
+                { throw new Exception(); }
 
-                Author currentAuthor = new Author(
-                    Convert.ToInt32(fields[0]),
-                    fields[1],
-                    fields[2]
+                Author currentAuthor = new Author
+                    (
+                        Convert.ToInt32(fields[0]),
+                        fields[1],
+                        fields[2]
                     );
-
                 AuthorsDatabase.authorsDb.Add(currentAuthor);
             }
         }
 
         private static void ReadDatabaseFileOfBooks(string fileName)
         {
-            var listOfLines = ReadLinesFromTxtFile("Books", fileName);
+            var listOfLines = ReadLinesFromTxtFile(fileName);
 
-            foreach (string line in listOfLines)
+            for (int i = 0; i < listOfLines.Count; i++)
             {
-                string[] fields = line.Split(";");
+                if (i == 0)
+                { continue; }
+                if (i == listOfLines.Count - 1)
+                { continue; }
+
+                string[] fields = listOfLines[i].Split(";");
                 if (fields.Length != 3)
-                { break; } //TODO: Exception
+                { throw new Exception(); } //TODO: Exception
 
                 var currentAuthor = AuthorsDatabase.authorsDb.FirstOrDefault(Author => Author.AuthorId == Convert.ToInt32(fields[2]));
                 if (currentAuthor == null)
                 { throw new Exception(); }
 
-                Book currentBook = new Book(
-                    fields[0],
-                    fields[1],
-                    currentAuthor
+                Book currentBook = new Book
+                    (
+                        fields[0],
+                        fields[1],
+                        currentAuthor
                     );
-
                 BooksDatabase.booksDb.Add(currentBook);
             }
         }

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Digibooky.Databases.Authors
+namespace Digibooky.Databases
 {
     public static class AuthorsDatabase
     {

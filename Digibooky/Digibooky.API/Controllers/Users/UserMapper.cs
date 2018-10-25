@@ -1,5 +1,6 @@
 ﻿using Digibooky.API.Controllers.Users.Interfaces;
 using Digibooky.Domain.Users;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,18 @@ namespace Digibooky.API.Controllers.Users
                 .Build();
                 
             return user;
+        }
+
+        public List<UserDTO> ListofUserToDTOList(List<User> givenListOfUsers)
+        {
+            var dtoList = new List<UserDTO>();
+
+            foreach (var user in givenListOfUsers)
+            {
+                dtoList.Add(UserToDTO(user));
+            }
+
+            return dtoList;
         }
 
         public UserDTO UserToDTO(User user)

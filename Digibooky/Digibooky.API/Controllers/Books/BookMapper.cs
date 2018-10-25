@@ -12,16 +12,16 @@ namespace Digibooky.API.Controllers.Books
 {
     public class BookMapper : IBookMapper
     {
-        public List<BookDTO> ListofBookToDTOObject(List<Book> givenListOfBooks)
+        public List<BookDTO> ListofBookToDTOList(List<Book> givenListOfBooks)
         {
-            List<BookDTO> dtos = new List<BookDTO>();
+            List<BookDTO> dtoList = new List<BookDTO>();
 
             foreach (var book in givenListOfBooks)
             {
-                dtos.Add(BookToDTO(book));
+                dtoList.Add(BookToDTO(book));
             }
 
-            return dtos;
+            return dtoList;
         }
 
         public BookDTO BookToDTO(Book givenBook)
