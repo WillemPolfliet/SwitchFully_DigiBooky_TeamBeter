@@ -10,7 +10,7 @@ namespace Digibooky.Domain.Books
         public Guid Id { get; }
         public string Isbn { get; private set; }
         public string Title { get; private set; }
-        public Author Author { get; private set; }
+        public Author Author { get; private set; } //TODO ID ?
 
         public Book(string isbn, string title, Author author)
         {

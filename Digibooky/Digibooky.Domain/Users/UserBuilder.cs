@@ -9,7 +9,7 @@ namespace Digibooky.Domain.Users
 {
     public class UserBuilder 
     {
-        public long INSS { get; private set; }
+        public long INSS { get; private set; } //long or string?
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
         public string Email { get; private set; }
@@ -46,7 +46,7 @@ namespace Digibooky.Domain.Users
 
         public UserBuilder WithLastName(string lastName)
         {
-            if(string.IsNullOrEmpty(lastName))
+            if(string.IsNullOrWhiteSpace(lastName))
             {
                 throw new UserException("Last name is required");
             }
@@ -57,12 +57,12 @@ namespace Digibooky.Domain.Users
 
         public UserBuilder WithEmail(string email)
         {
-            if (string.IsNullOrEmpty(email))
+            if (string.IsNullOrWhiteSpace(email))
             {
                 throw new UserException("Email is required");
             }
 
-            if (!emailIsValid(email))
+            if (!IsEmailValid(email))
             {
                 throw new UserException("Emailformat must be word@word.word");
             }
@@ -71,7 +71,7 @@ namespace Digibooky.Domain.Users
             return this;
         }
 
-        private bool emailIsValid(string email)
+        private bool IsEmailValid(string email)
         {
             try
             {
@@ -86,6 +86,7 @@ namespace Digibooky.Domain.Users
 
         public UserBuilder WithPassword(string password)
         {
+            //TODO password rules and required
             this.Password= password;
             return this;
         }
@@ -116,7 +117,7 @@ namespace Digibooky.Domain.Users
 
         public UserBuilder WithCity(string city)
         {
-            if (string.IsNullOrEmpty(city))
+            if (string.IsNullOrWhiteSpace(city))
             {
                 throw new UserException("City is required");
             }

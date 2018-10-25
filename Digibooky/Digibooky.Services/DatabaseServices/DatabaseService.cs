@@ -66,7 +66,7 @@ namespace Digibooky.Services.DatabaseServices
             {
                 string[] fields = line.Split(";");
                 if (fields.Length != 3)
-                { break; }
+                { break; } //TODO: Exception
 
                 var currentAuthor = AuthorsDatabase.authorsDb.FirstOrDefault(Author => Author.AuthorId == Convert.ToInt32(fields[2]));
                 if (currentAuthor == null)

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Digibooky.API.Controllers.Users.Interfaces;
+﻿using Digibooky.API.Controllers.Users.Interfaces;
 using Digibooky.Domain.Users;
 using Digibooky.Domain.Users.Exceptions;
 using Digibooky.Services.UserServices.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 
 namespace Digibooky.API.Controllers.Users
 {
@@ -29,14 +26,14 @@ namespace Digibooky.API.Controllers.Users
         {
             try
             {
-            _userService.Register(_userMapper.DTORegisterToUser(userToRegister));
-            return Ok();
+                _userService.Register(_userMapper.DTORegisterToUser(userToRegister));
+                return Ok();
             }
-            catch (UserException ex)
+            catch (UserException userEx)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(userEx.Message);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -45,6 +42,7 @@ namespace Digibooky.API.Controllers.Users
         [HttpGet]
         public ActionResult<List<UserDTO>> GetAll()
         {
+            //TODO method in Mapper
             var dtoList = new List<UserDTO>();
             foreach (var user in _userService.GetAll())
             {
