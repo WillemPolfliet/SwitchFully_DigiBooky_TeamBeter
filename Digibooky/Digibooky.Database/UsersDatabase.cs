@@ -1,12 +1,22 @@
 ﻿using Digibooky.Domain.Users;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Digibooky.Databases
 {
     public static class UsersDatabase
     {
-        public static List<User> users = new List<User>() { new User(123456789, "test", "test", "test", "test", User.Roles.member, "test", "test", 1, "test") };
-    }
+        public static List<User> users = new List<User>() { UserBuilder.CreateUser()
+                .WithINSS(1234567891234)
+                .WithFirstName("Firstname")
+                .WithLastName("Lastname")
+                .WithEmail("user@user.com")
+                .WithPassword("Password123")
+                .WithRole(User.Roles.member)
+                .WithStreet("Street")
+                .WithStreetNumber("5A")
+                .WithPostalCode(2800)
+                .WithCity("Mechelen")
+                .Build() };
+    };
 }
+

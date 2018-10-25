@@ -20,19 +20,20 @@ namespace Digibooky.Domain.Users
         public int PostalCode { get; private set; }
         public string City { get; private set; }
 
-        public User(long iNSS, string firstName, string lastName, string email, string password, Roles userRole, string street, string streetNumber, int postalCode, string city)
+        public User(UserBuilder userBuilder)
         {
             ID = Guid.NewGuid();
-            INSS = iNSS;
-            FirstName = firstName;
-            LastName = lastName;
-            Email = email;
-            Password = password;
-            UserRole = userRole;
-            Street = street;
-            StreetNumber = streetNumber;
-            PostalCode = postalCode;
-            City = city;
+            INSS = userBuilder.INSS;
+            FirstName = userBuilder.FirstName;
+            LastName = userBuilder.LastName;
+            Email = userBuilder.Email;
+            Password = userBuilder.Password;
+            UserRole = userBuilder.UserRole;
+            Street = userBuilder.Street;
+            StreetNumber = userBuilder.StreetNumber;
+            PostalCode = userBuilder.PostalCode;
+            City = userBuilder.City;
         }
+
     }
 }
