@@ -49,8 +49,8 @@ namespace Digibooky.Domain.Users
             if(string.IsNullOrEmpty(lastName))
             {
                 throw new UserException("Last name is required");
-
             }
+
             this.LastName = lastName;
             return this;
         }

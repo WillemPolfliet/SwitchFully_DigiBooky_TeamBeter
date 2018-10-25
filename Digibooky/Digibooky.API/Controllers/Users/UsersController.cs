@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Digibooky.API.Controllers.Users.Interfaces;
 using Digibooky.Domain.Users;
+using Digibooky.Domain.Users.Exceptions;
 using Digibooky.Services.UserServices.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,8 +27,19 @@ namespace Digibooky.API.Controllers.Users
         [HttpPost]
         public ActionResult<User> Register([FromBody]UserDTORegister userToRegister)
         {
+            try
+            {
             _userService.Register(_userMapper.DTORegisterToUser(userToRegister));
             return Ok();
+            }
+            catch (UserException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]
