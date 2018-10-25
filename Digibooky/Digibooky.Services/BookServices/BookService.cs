@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Digibooky.Databases;
+﻿using Digibooky.Databases;
 using Digibooky.Databases.Books;
 using Digibooky.Domain.Books;
+using Digibooky.Services.BookServices.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Digibooky.Services.BookServices
 {
