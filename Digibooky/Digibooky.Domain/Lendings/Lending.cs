@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Digibooky.Domain.Lendings
 {
-    class Lending
+    public class Lending
     {
         string ID { get; set; }
         Guid UserId { get; set; }
