@@ -6,6 +6,7 @@ using Digibooky.Services.UserServices;
 using Digibooky.Domain.Users;
 using Digibooky.Databases;
 using System.Linq;
+using Digibooky.Domain.Users.Exceptions;
 
 namespace Digibooky.Services.Tests.UserServices
 {
@@ -14,7 +15,18 @@ namespace Digibooky.Services.Tests.UserServices
         [Fact]
         public void GivenUserDatabaseAndAUser_WhenRegister_ThenUserIsAddedToDatabase()
         {
-            var user = new User(1234567891234, "Firstname", "Lastname", "user@user.com", "password", User.Roles.member, "Street", "5A", 2800, "Mechelen");
+            var user = UserBuilder.CreateUser()
+                .WithINSS(1234567891235)
+                .WithFirstName("Firstname")
+                .WithLastName("Lastname")
+                .WithEmail("user01@user.com")
+                .WithPassword("Password123")
+                .WithRole(User.Roles.member)
+                .WithStreet("Street")
+                .WithStreetNumber("5A")
+                .WithPostalCode(2800)
+                .WithCity("Mechelen")
+                .Build();
 
             UserService userService = new UserService();
 
@@ -33,6 +45,58 @@ namespace Digibooky.Services.Tests.UserServices
             var actual = userService.GetAll();
 
             Assert.IsType<List<User>>(actual);
+        }
+
+        [Fact]
+        public void GivenUserDatabaseAndUser_WhenAddingUserWithExistingINSS_ThenThrowException()
+        {
+            var user = UserBuilder.CreateUser()
+                .WithINSS(1234567891234)
+                .WithFirstName("Firstname")
+                .WithLastName("Lastname")
+                .WithEmail("user@user.com")
+                .WithPassword("Password123")
+                .WithRole(User.Roles.member)
+                .WithStreet("Street")
+                .WithStreetNumber("5A")
+                .WithPostalCode(2800)
+                .WithCity("Mechelen")
+                .Build();
+
+            UserService userService = new UserService();
+
+            Action act = () => userService.Register(user);
+
+            var exception = Assert.Throws<UserException>(act);
+
+            Assert.Equal("INSS already exists", exception.Message);
+
+        }
+
+        [Fact]
+        public void GivenUserDatabaseAndUser_WhenAddingUserWithExistingEmail_ThenThrowException()
+        {
+            var user = UserBuilder.CreateUser()
+                .WithINSS(1234567891236)
+                .WithFirstName("Firstname")
+                .WithLastName("Lastname")
+                .WithEmail("user@user.com")
+                .WithPassword("Password123")
+                .WithRole(User.Roles.member)
+                .WithStreet("Street")
+                .WithStreetNumber("5A")
+                .WithPostalCode(2800)
+                .WithCity("Mechelen")
+                .Build();
+
+            UserService userService = new UserService();
+
+            Action act = () => userService.Register(user);
+
+            var exception = Assert.Throws<UserException>(act);
+
+            Assert.Equal("Email already exists", exception.Message);
+
         }
 
 

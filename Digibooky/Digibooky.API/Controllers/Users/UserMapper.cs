@@ -14,11 +14,18 @@ namespace Digibooky.API.Controllers.Users
         {
             var userRole = (Roles)Enum.Parse(typeof(Roles), userDTORegister.UserRole);
 
-            var user = new User(userDTORegister.INSS, userDTORegister.FirstName, userDTORegister.LastName,
-                userDTORegister.Email,
-                userDTORegister.Password, userRole, userDTORegister.Street,
-                userDTORegister.StreetNumber, userDTORegister.PostalCode, userDTORegister.City);
-
+            var user = UserBuilder.CreateUser()
+                .WithINSS(userDTORegister.INSS)
+                .WithFirstName(userDTORegister.FirstName)
+                .WithLastName(userDTORegister.LastName)
+                .WithEmail(userDTORegister.Email)
+                .WithPassword(userDTORegister.Password)
+                .WithStreet(userDTORegister.Street)
+                .WithStreetNumber(userDTORegister.StreetNumber)
+                .WithPostalCode(userDTORegister.PostalCode)
+                .WithCity(userDTORegister.City)
+                .Build();
+                
             return user;
         }
     }
