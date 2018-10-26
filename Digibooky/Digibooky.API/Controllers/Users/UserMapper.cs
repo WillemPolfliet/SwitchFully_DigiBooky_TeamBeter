@@ -1,10 +1,8 @@
 ﻿using Digibooky.API.Controllers.Users.Interfaces;
 using Digibooky.Domain.Users;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 using static Digibooky.Domain.Users.User;
 
 namespace Digibooky.API.Controllers.Users
@@ -20,13 +18,14 @@ namespace Digibooky.API.Controllers.Users
                 .WithFirstName(userDTORegister.FirstName)
                 .WithLastName(userDTORegister.LastName)
                 .WithEmail(userDTORegister.Email)
+                .WithRole()
                 .WithPassword(userDTORegister.Password)
                 .WithStreet(userDTORegister.Street)
                 .WithStreetNumber(userDTORegister.StreetNumber)
                 .WithPostalCode(userDTORegister.PostalCode)
                 .WithCity(userDTORegister.City)
                 .Build();
-                
+
             return user;
         }
 
@@ -51,12 +50,24 @@ namespace Digibooky.API.Controllers.Users
                 LastName = user.LastName,
                 Email = user.Email,
                 Password = user.Password,
-                UserRole = user.UserRole.ToString(),
+                UserRole = PrintAsString(user.UserRoles),
                 Street = user.Street,
                 StreetNumber = user.StreetNumber,
                 PostalCode = user.PostalCode,
                 City = user.City
             };
+        }
+
+        private string PrintAsString(List<Roles> userRoles)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var role in userRoles)
+            {
+                sb.Append(role.ToString());
+                sb.Append(", ");
+            }
+
+            return sb.ToString();
         }
     }
 }

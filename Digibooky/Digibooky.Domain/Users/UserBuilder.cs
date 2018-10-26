@@ -16,7 +16,7 @@ namespace Digibooky.Domain.Users
         public string LastName { get; private set; }
         public string Email { get; private set; }
         public string Password { get; private set; }
-        public Roles UserRole { get; private set; }
+        public List<Roles> UserRole { get; private set; }
         public string Street { get; private set; }
         public string StreetNumber { get; private set; }
         public int PostalCode { get; private set; }
@@ -88,7 +88,6 @@ namespace Digibooky.Domain.Users
 
         public UserBuilder WithPassword(string password)
         {
-            //TODO password rules and required
             if (string.IsNullOrWhiteSpace(password))
             {
                 throw new UserException("Password is required");
@@ -107,9 +106,9 @@ namespace Digibooky.Domain.Users
             return this;
         }
 
-        public UserBuilder WithRole(Roles role)
+        public UserBuilder WithRole()
         {
-            this.UserRole = role;
+            this.UserRole = new List<Roles>() { User.Roles.member };
             return this;
         }
 

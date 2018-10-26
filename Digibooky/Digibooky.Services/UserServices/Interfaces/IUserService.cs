@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Digibooky.Services.UserServices.Interfaces
 {
@@ -9,5 +10,7 @@ namespace Digibooky.Services.UserServices.Interfaces
     {
         void Register(User user);
         List<User> GetAllUsers();
+        void RegisterAsLibrarian(long userINSS);
+        Task<User> Authenticate(string username, string password);
     }
 }

@@ -32,7 +32,7 @@ namespace Digibooky.API.Controllers.Books
         }
 
         [HttpGet]
-        [Route("ShowDetailsOfSingleBook/{ISBN}")]
+        [Route("{ISBN}")]
         public ActionResult<BookDetailsDTO> ShowDetailsOfSingleBook(string ISBN)
         {
             try

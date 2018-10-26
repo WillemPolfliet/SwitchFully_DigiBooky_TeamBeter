@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Digibooky.Services.UserServices;
+﻿using Digibooky.Databases;
 using Digibooky.Domain.Users;
-using Digibooky.Databases;
-using System.Linq;
 using Digibooky.Domain.Users.Exceptions;
+using Digibooky.Services.UserServices;
+using Digibooky.Services.UserServices.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Xunit;
 
 namespace Digibooky.Services.Tests.UserServices
 {
@@ -21,14 +21,14 @@ namespace Digibooky.Services.Tests.UserServices
                 .WithLastName("Lastname")
                 .WithEmail("user01@user.com")
                 .WithPassword("Password123")
-                .WithRole(User.Roles.member)
+                .WithRole()
                 .WithStreet("Street")
                 .WithStreetNumber("5A")
                 .WithPostalCode(2800)
                 .WithCity("Mechelen")
                 .Build();
 
-            UserService userService = new UserService();
+            IUserService userService = new UserService();
 
             userService.Register(user);
 
@@ -40,7 +40,7 @@ namespace Digibooky.Services.Tests.UserServices
         [Fact]
         public void GivenUserDataBase_WhenGetAll_ThenAllUsersAreReturned()
         {
-            UserService userService = new UserService();
+            IUserService userService = new UserService();
 
             var actual = userService.GetAllUsers();
 
@@ -56,14 +56,14 @@ namespace Digibooky.Services.Tests.UserServices
                 .WithLastName("Lastname")
                 .WithEmail("user@user.com")
                 .WithPassword("Password123")
-                .WithRole(User.Roles.member)
+                .WithRole()
                 .WithStreet("Street")
                 .WithStreetNumber("5A")
                 .WithPostalCode(2800)
                 .WithCity("Mechelen")
                 .Build();
 
-            UserService userService = new UserService();
+            IUserService userService = new UserService();
 
             Action act = () => userService.Register(user);
 
@@ -82,14 +82,14 @@ namespace Digibooky.Services.Tests.UserServices
                 .WithLastName("Lastname")
                 .WithEmail("user@user.com")
                 .WithPassword("Password123")
-                .WithRole(User.Roles.member)
+                .WithRole()
                 .WithStreet("Street")
                 .WithStreetNumber("5A")
                 .WithPostalCode(2800)
                 .WithCity("Mechelen")
                 .Build();
 
-            UserService userService = new UserService();
+            IUserService userService = new UserService();
 
             Action act = () => userService.Register(user);
 
@@ -99,6 +99,27 @@ namespace Digibooky.Services.Tests.UserServices
 
         }
 
+        [Fact]
+        public void GivenUserToRegisterAsLibrarian_RegisteringTheUser_UserHasLibrarianAsRole()
+        {
+            IUserService userService = new UserService();
+            var user = UsersDatabase.users[0];
+            userService.RegisterAsLibrarian(user.INSS);
 
+            var rolesActual = UsersDatabase.users.FirstOrDefault(usr => usr.ID == user.ID).UserRoles;
+            var rolesExpected = new List<User.Roles>() { User.Roles.member, User.Roles.librarian };
+
+            Assert.Equal(rolesExpected, rolesActual);
+        }
+
+        [Fact]
+        public async void WhenUsergiven_AuthenticatingMember_ThenMemberLogsIn()
+        {
+            IUserService userService = new UserService();
+
+            var actual = await userService.Authenticate(UsersDatabase.users[0].Email, UsersDatabase.users[0].Password);
+
+            Assert.Equal(actual, UsersDatabase.users[0]);
+        }
     }
 }
