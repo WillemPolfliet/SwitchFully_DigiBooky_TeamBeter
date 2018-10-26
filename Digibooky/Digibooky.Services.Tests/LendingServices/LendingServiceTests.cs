@@ -1,5 +1,6 @@
 ﻿using Digibooky.Databases;
 using Digibooky.Domain.Lendings;
+using Digibooky.Domain.Lendings.Exceptions;
 using Digibooky.Services.DatabaseServices;
 using Digibooky.Services.LendingServices;
 using System;
@@ -34,5 +35,36 @@ namespace Digibooky.Services.Tests.LendingServices
 
             Assert.IsType<List<Lending>>(actualResult);
         }
-    }
+
+		[Fact]
+		public void GivenABooksDBAndAUserDB_WhenLendingABookWithNonExistingUserINSS_ThenGetException()
+		{
+			//Given
+			BooksDatabase.booksDb.Add(new Domain.Books.Book("1231231231231", "title", new Domain.Authors.Author(0)));
+
+			//When
+			LendingService lendingService = new LendingService();
+			Action act = () => lendingService.LendBook(123456, "1231231231231");
+
+			//Then
+			var exception = Assert.Throws<LendingException>(act);
+			Assert.Equal("User INSS does not exist", exception.Message);
+		}
+
+		[Fact]
+		public void GivenABooksDBAndAUserDB_WhenLendingABookWithNonExistingBookISBN_ThenGetException()
+		{
+			//Given
+			BooksDatabase.booksDb.Add(new Domain.Books.Book("1231231231231", "title", new Domain.Authors.Author(0)));
+
+			//When
+			LendingService lendingService = new LendingService();
+			Action act = () => lendingService.LendBook(1234567891234, "zertyui");
+
+			//Then
+			var exception = Assert.Throws<LendingException>(act);
+			Assert.Equal("Book ISBN does not exist", exception.Message);
+		}
+
+	}
 }
