@@ -66,5 +66,21 @@ namespace Digibooky.Services.Tests.LendingServices
 			Assert.Equal("Book ISBN does not exist", exception.Message);
 		}
 
+        [Fact]
+        public void GivenABooksDBAndAUserDB_WhenLendingABookThatIsInLendingDb_ThenGetException()
+        {
+            //given
+			BooksDatabase.booksDb.Add(new Domain.Books.Book("1231231231231", "title", new Domain.Authors.Author(0)));
+
+            //when
+			LendingService lendingService = new LendingService();
+			lendingService.LendBook(1234567891234, "1231231231231");
+			Action act = () => lendingService.LendBook(1234567891234, "1231231231231");
+
+            //then
+			var exception = Assert.Throws<LentOutException>(act);
+			Assert.Equal("Book is currently not available, it is already lent out.", exception.Message);
+        }
+
 	}
 }

@@ -21,12 +21,22 @@ namespace Digibooky.Services.LendingServices
 			{
 				throw new LendingException("Book ISBN does not exist");
 			}
-			Lending lending = new Lending(inss, isbn, DateTime.Today.Date, DateTime.Today.Date.AddDays(21));
+            if (BookIsAlreadyLent(isbn))
+            {
+                throw new LentOutException("Book is currently not available, it is already lent out.");
+            }
+
+            Lending lending = new Lending(inss, isbn, DateTime.Today.Date, DateTime.Today.Date.AddDays(21));
 
             LendingsDatabase.Lendings.Add(lending);
         }
 
-		private bool DoesBookISBNExist(string isbn)
+        private bool BookIsAlreadyLent(string isbn)
+        {
+            return LendingsDatabase.Lendings.Any(lending => lending.Isbn == isbn);
+        }
+
+        private bool DoesBookISBNExist(string isbn)
 		{
 			return BooksDatabase.booksDb.Any(book => book.Isbn == isbn);
 		}

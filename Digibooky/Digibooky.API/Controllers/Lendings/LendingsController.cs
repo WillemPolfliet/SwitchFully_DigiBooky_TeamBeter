@@ -7,6 +7,7 @@ using Digibooky.API.Controllers.Lendings.Interfaces;
 using Digibooky.Services.LendingServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Digibooky.Domain.Lendings;
+using Digibooky.Domain.Lendings.Exceptions;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -45,9 +46,25 @@ namespace Digibooky.API.Controllers.Lendings
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]LendingDTOLendingPost lendingDTOLendingPost)
+        public ActionResult Post([FromBody]LendingDTOLendingPost lendingDTOLendingPost)
         {
-            _lendingService.LendBook(lendingDTOLendingPost.inss, lendingDTOLendingPost.isbn);
+            try
+            {
+                _lendingService.LendBook(lendingDTOLendingPost.inss, lendingDTOLendingPost.isbn);
+                return Ok();
+            }
+            catch (LendingException lendingException)
+            {
+                return NotFound(lendingException.Message);
+            }
+            catch (LentOutException lentOutException)
+            {
+                return BadRequest(lentOutException.Message);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
 
         // PUT api/<controller>/5
