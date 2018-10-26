@@ -26,6 +26,7 @@ namespace Digibooky.API.Controllers.Books
 
         public BookDTO BookToDTO(Book givenBook)
         {
+            //TO ASK: DO SAME AS BELOW?
             AuthorMapper authorMapper = new AuthorMapper();
 
             return new BookDTO
@@ -33,6 +34,18 @@ namespace Digibooky.API.Controllers.Books
                 Isbn = givenBook.Isbn,
                 Title = givenBook.Title,
                 AuthorDTO = authorMapper.AuthorToDTO(givenBook.Author)
+            };
+        }
+
+        public BookDetailsDTO BookToDetailsDTO(Book givenBook)
+        {
+            return new BookDetailsDTO
+            {
+                Isbn = givenBook.Isbn,
+                Title = givenBook.Title,
+                IDAuthor = givenBook.Author.AuthorId,
+                FirstNameAuthor = givenBook.Author.FirstName,
+                LastNameAuthor = givenBook.Author.LastName
             };
         }
     }

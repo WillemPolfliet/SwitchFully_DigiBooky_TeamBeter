@@ -10,5 +10,6 @@ namespace Digibooky.API.Controllers.Books.Interfaces
     {
         List<BookDTO> ListofBookToDTOList(List<Book> givenListOfBooks);
         BookDTO BookToDTO(Book givenBook);
+        BookDetailsDTO BookToDetailsDTO(Book givenBook);
     }
 }
