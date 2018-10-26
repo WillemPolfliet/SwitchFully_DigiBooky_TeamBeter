@@ -15,11 +15,11 @@ namespace Digibooky.Services.LendingServices
         {
 			if (!DoesUserINSSExist(inss))
 			{
-				throw new LendingException("User INSS does not exist");
+				throw new LendingException("User INSS does not exist");//TODO UserException?
 			}
 			if (!DoesBookISBNExist(isbn))
 			{
-				throw new LendingException("Book ISBN does not exist");
+				throw new LendingException("Book ISBN does not exist");//TODO BookException?
 			}
             if (BookIsAlreadyLent(isbn))
             {

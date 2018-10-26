@@ -94,7 +94,7 @@ namespace Digibooky.API.Tests.UsersController
                 .WithLastName("Lastname")
                 .WithEmail("email@user.com")
                 .WithPassword("Password123")
-                .WithRole(User.Roles.member)
+                .WithRole()
                 .WithStreet("Street")
                 .WithStreetNumber("5A")
                 .WithPostalCode(2800)
@@ -146,7 +146,6 @@ namespace Digibooky.API.Tests.UsersController
             _client.DefaultRequestHeaders.Authorization = CreateBasicHeader(username, password);
 
             var content = JsonConvert.SerializeObject(User.Roles.librarian);
-
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
 
             var response = await _client.PutAsync($"/api/users/{inss}", stringContent);
@@ -155,7 +154,7 @@ namespace Digibooky.API.Tests.UsersController
             Assert.Equal(2, UsersDatabase.users[1].UserRoles.Count);
         }
 
-        public AuthenticationHeaderValue CreateBasicHeader(string username, string password)
+        private AuthenticationHeaderValue CreateBasicHeader(string username, string password)
         {
             byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(username + ":" + password);
             return new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));

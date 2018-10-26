@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using Digibooky.Domain.Lendings;
 using Digibooky.Domain.Lendings.Exceptions;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Digibooky.API.Controllers.Lendings
 {
@@ -46,7 +45,7 @@ namespace Digibooky.API.Controllers.Lendings
 
         // POST api/<controller>
         [HttpPost]
-        public ActionResult Post([FromBody]LendingDTOLendingPost lendingDTOLendingPost)
+        public ActionResult Lend([FromBody]LendingDTOLendingPost lendingDTOLendingPost)
         {
             try
             {

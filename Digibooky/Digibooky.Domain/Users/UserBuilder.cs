@@ -16,7 +16,7 @@ namespace Digibooky.Domain.Users
         public string LastName { get; private set; }
         public string Email { get; private set; }
         public string Password { get; private set; }
-        public List<Roles> UserRole { get; private set; }
+        public List<Roles> UserRoles { get; private set; }
         public string Street { get; private set; }
         public string StreetNumber { get; private set; }
         public int PostalCode { get; private set; }
@@ -108,10 +108,10 @@ namespace Digibooky.Domain.Users
 
         public UserBuilder WithRole(User.Roles role = Roles.member)
         {
-            this.UserRole = new List<Roles>() { User.Roles.member };
+            this.UserRoles = new List<Roles>() { User.Roles.member };
             if (role != Roles.member)
             {
-                UserRole.Add(role);
+                UserRoles.Add(role);
             }
             return this;
         }

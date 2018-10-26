@@ -33,7 +33,7 @@ namespace Digibooky.Domain.Users
             LastName = userBuilder.LastName;
             Email = userBuilder.Email;
             Password = userBuilder.Password;
-            UserRoles = userBuilder.UserRole;
+            UserRoles = userBuilder.UserRoles;
             Street = userBuilder.Street;
             StreetNumber = userBuilder.StreetNumber;
             PostalCode = userBuilder.PostalCode;

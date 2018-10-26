@@ -35,6 +35,7 @@ namespace Digibooky.API.Controllers.Books
         }
 
         [AllowAnonymous]
+
         [HttpGet]
         [Route("{ISBN}")]
         public ActionResult<BookDetailsDTO> ShowDetailsOfSingleBook(string ISBN)
