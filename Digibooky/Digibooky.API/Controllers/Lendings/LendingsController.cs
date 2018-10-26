@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Digibooky.Services.LendingServices;
+using Digibooky.API.Controllers.Lendings.Interfaces;
+using Digibooky.Services.LendingServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,20 +12,33 @@ using Microsoft.AspNetCore.Mvc;
 namespace Digibooky.API.Controllers.Lendings
 {
     [Route("api/[controller]")]
-    public class LendingsController : Controller
+    public class LendingsController : ControllerBase
     {
+
+        private readonly ILendingService _lendingService;
+        private readonly ILendingMapper _lendingMapper;
+
+        public LendingsController(ILendingService lendingService, ILendingMapper lendingMapper)
+        {
+            _lendingService = lendingService;
+            _lendingMapper = lendingMapper;
+        }
+
         // GET: api/<controller>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public List<LendingDTO> Get()
         {
-            return new string[] { "value1", "value2" };
+            var allLendings = _lendingService.GetAll();
+            var allLendingDTOs = _lendingMapper.LendingListToLendingDTOList(allLendings);
+
+            return allLendingDTOs;
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            return "value";
+            throw new NotImplementedException();
         }
 
         // POST api/<controller>

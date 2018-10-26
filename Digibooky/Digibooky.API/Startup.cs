@@ -1,10 +1,14 @@
 ﻿using Digibooky.API.Controllers.Books;
 using Digibooky.API.Controllers.Books.Interfaces;
+using Digibooky.API.Controllers.Lendings;
+using Digibooky.API.Controllers.Lendings.Interfaces;
 using Digibooky.API.Controllers.Users;
 using Digibooky.API.Controllers.Users.Interfaces;
 using Digibooky.Services.BookServices;
 using Digibooky.Services.BookServices.Interfaces;
 using Digibooky.Services.DatabaseServices;
+using Digibooky.Services.LendingServices;
+using Digibooky.Services.LendingServices.Interfaces;
 using Digibooky.Services.UserServices;
 using Digibooky.Services.UserServices.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -38,6 +42,8 @@ namespace Digibooky.API
             services.AddSingleton<IUserMapper, UserMapper>();
             services.AddSingleton<IBookService, BookService>();
             services.AddSingleton<IBookMapper, BookMapper>();
+            services.AddSingleton<ILendingService, LendingService>();
+            services.AddSingleton<ILendingMapper, LendingMapper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

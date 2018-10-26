@@ -1,4 +1,5 @@
 ﻿using Digibooky.Databases;
+using Digibooky.Domain.Lendings;
 using Digibooky.Services.DatabaseServices;
 using Digibooky.Services.LendingServices;
 using System;
@@ -23,6 +24,15 @@ namespace Digibooky.Services.Tests.LendingServices
 
             int countAfterLending = LendingsDatabase.Lendings.Count;
             Assert.Equal(countAfterLending, countBeforeLending + 1);
+        }
+
+        [Fact]
+        public void GivenALendingService_WhenGetAll_ThenReceiveAListOfLendings()
+        {
+            LendingService lendingService = new LendingService();
+            var actualResult = lendingService.GetAll();
+
+            Assert.IsType<List<Lending>>(actualResult);
         }
     }
 }
