@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Digibooky.Database\Digibooky.Databases.csproj" />
     <ProjectReference Include="..\Digibooky.Domain\Digibooky.Domain.csproj" />
+    <ProjectReference Include="..\Digibooky.Services\Digibooky.Services.csproj" />
   </ItemGroup>
 
 </Project>

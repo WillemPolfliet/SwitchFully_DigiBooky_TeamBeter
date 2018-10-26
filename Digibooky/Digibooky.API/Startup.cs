@@ -18,10 +18,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NJsonSchema;
+using NSwag.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace Digibooky.API
 {
@@ -44,6 +47,8 @@ namespace Digibooky.API
             services.AddSingleton<IBookMapper, BookMapper>();
             services.AddSingleton<ILendingService, LendingService>();
             services.AddSingleton<ILendingMapper, LendingMapper>();
+
+			services.AddSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,7 +59,20 @@ namespace Digibooky.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc();
-        }
-    }
+			app.UseSwaggerUi3WithApiExplorer(settings =>
+			{
+				settings.GeneratorSettings.DefaultPropertyNameHandling =
+					PropertyNameHandling.CamelCase;
+			});
+
+
+			app.UseMvc();
+
+			app.Run(async context =>
+			{
+				context.Response.Redirect("/swagger");
+			});
+
+		}
+	}
 }
