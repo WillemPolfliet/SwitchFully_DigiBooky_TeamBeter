@@ -14,7 +14,6 @@ namespace Digibooky.API.Controllers.Lendings
     [Route("api/[controller]")]
     public class LendingsController : ControllerBase
     {
-
         private readonly ILendingService _lendingService;
         private readonly ILendingMapper _lendingMapper;
 
@@ -23,6 +22,8 @@ namespace Digibooky.API.Controllers.Lendings
             _lendingService = lendingService;
             _lendingMapper = lendingMapper;
         }
+
+
 
         // GET: api/<controller>
         [HttpGet]
@@ -43,8 +44,9 @@ namespace Digibooky.API.Controllers.Lendings
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void Post([FromBody] long inss, string isbn)
         {
+            _lendingService.LendBook(inss, isbn);
         }
 
         // PUT api/<controller>/5

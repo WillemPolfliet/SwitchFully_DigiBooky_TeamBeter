@@ -9,9 +9,9 @@ namespace Digibooky.Services.LendingServices
 {
     public class LendingService : ILendingService
     {
-        public void LendBook(Guid userId, Guid bookId)
+        public void LendBook(long inss, string isbn)
         {
-            Lending lending = new Lending(userId, bookId, DateTime.Today.Date, DateTime.Today.Date.AddDays(21));
+            Lending lending = new Lending(inss, isbn, DateTime.Today.Date, DateTime.Today.Date.AddDays(21));
 
             LendingsDatabase.Lendings.Add(lending);
         }

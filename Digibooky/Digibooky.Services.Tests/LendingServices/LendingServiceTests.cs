@@ -15,12 +15,12 @@ namespace Digibooky.Services.Tests.LendingServices
         public void GivenCountBeforeLending_WhenLendBook_ThenCountAfterLendingIsPlusOne()
         {
             BooksDatabase.booksDb.Add(new Domain.Books.Book("1231231231231", "title", new Domain.Authors.Author(0)));
-            Guid userId = UsersDatabase.users[0].ID;
-            Guid bookId = BooksDatabase.booksDb[0].Id;
+            long inss = UsersDatabase.users[0].INSS;
+            string isbn = BooksDatabase.booksDb[0].Isbn;
             int countBeforeLending = LendingsDatabase.Lendings.Count;
 
             LendingService lendingService = new LendingService();
-            lendingService.LendBook(userId, bookId);
+            lendingService.LendBook(inss, isbn);
 
             int countAfterLending = LendingsDatabase.Lendings.Count;
             Assert.Equal(countAfterLending, countBeforeLending + 1);

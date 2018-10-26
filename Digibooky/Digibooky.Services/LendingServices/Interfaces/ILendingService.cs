@@ -7,7 +7,7 @@ namespace Digibooky.Services.LendingServices.Interfaces
 {
     public interface ILendingService
     {
-        void LendBook(Guid userId, Guid bookId);
+        void LendBook(long inss, string isbn);
         List<Lending> GetAll();
     }
 }

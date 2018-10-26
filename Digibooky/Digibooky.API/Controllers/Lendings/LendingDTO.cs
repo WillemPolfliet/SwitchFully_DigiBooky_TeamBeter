@@ -9,16 +9,16 @@ namespace Digibooky.API.Controllers.Lendings
     public class LendingDTO
     {
         Guid ID { get; set; }
-        Guid UserId { get; set; }
-        Guid BookId { get; set; }
+        long Inss { get; set; }
+        string Isbn { get; set; }
         DateTime Date { get; set; }
         DateTime ReturnDate { get; set; }
 
         public LendingDTO(Lending lending)
         {
             ID = lending.ID;
-            UserId = lending.UserId;
-            BookId = lending.BookId;
+            Inss = lending.INSS;
+            Isbn = lending.Isbn;
             Date = lending.Date;
             ReturnDate = lending.ReturnDate;
         }

@@ -7,16 +7,16 @@ namespace Digibooky.Domain.Lendings
     public class Lending
     {
         public Guid ID { get; set; }
-        public Guid UserId { get; set; }
-        public Guid BookId { get; set; }
+        public long INSS { get; set; }
+        public string Isbn { get; set; }
         public DateTime Date { get; set; }
         public DateTime ReturnDate { get; set; }
 
-        public Lending(Guid userId, Guid bookId, DateTime date, DateTime returnDate)
+        public Lending(long inss, string isbn, DateTime date, DateTime returnDate)
         {
             ID = Guid.NewGuid();
-            UserId = userId;
-            BookId = bookId;
+            INSS = inss;
+            Isbn = isbn;
             Date = date;
             ReturnDate = returnDate;
         }
