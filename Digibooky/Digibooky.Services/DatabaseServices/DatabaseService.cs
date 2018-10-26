@@ -18,9 +18,9 @@ namespace Digibooky.Services.DatabaseServices
                 ReadDatabaseFileOfAuthors("uniqueAuthorsWithId.txt");
                 ReadDatabaseFileOfBooks("uniqueBooksWithAuthorId.txt");
             }
-            catch
+            catch (Exception ex)
             {
-                throw new Exception();
+                throw new Exception(ex.Message);
             }
         }
 
@@ -75,11 +75,11 @@ namespace Digibooky.Services.DatabaseServices
 
                 string[] fields = listOfLines[i].Split(";");
                 if (fields.Length != 3)
-                { throw new Exception(); } //TODO: Exception
+                { throw new Exception("exc 01"); } //TODO: Exception
 
                 var currentAuthor = AuthorsDatabase.authorsDb.FirstOrDefault(Author => Author.AuthorId == Convert.ToInt32(fields[2]));
                 if (currentAuthor == null)
-                { throw new Exception(); }
+                { throw new Exception("exc 02"); }
 
                 Book currentBook = new Book
                     (
