@@ -21,6 +21,12 @@ namespace Digibooky.API.Controllers.Users
             _userMapper = userMapper;
         }
 
+        [HttpGet]
+        public ActionResult<List<UserDTO>> GetAllUsers()
+        {
+            return Ok(_userMapper.ListofUserToDTOList(_userService.GetAllUsers()));
+        }
+
         [HttpPost]
         public ActionResult<User> Register([FromBody]UserDTORegister userToRegister)
         {
@@ -39,10 +45,5 @@ namespace Digibooky.API.Controllers.Users
             }
         }
 
-        [HttpGet]
-        public ActionResult<List<UserDTO>> GetAllUsers()
-        {
-            return Ok(_userMapper.ListofUserToDTOList(_userService.GetAllUsers()));
-        }
     }
 }

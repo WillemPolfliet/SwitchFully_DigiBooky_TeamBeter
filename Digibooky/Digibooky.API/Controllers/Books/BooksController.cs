@@ -1,5 +1,6 @@
 ﻿using Digibooky.API.Controllers.Books.Interfaces;
 using Digibooky.Domain.Books;
+using Digibooky.Domain.Books.Exceptions;
 using Digibooky.Services.BookServices;
 using Digibooky.Services.BookServices.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -32,17 +33,21 @@ namespace Digibooky.API.Controllers.Books
 
         [HttpGet]
         [Route("ShowDetailsOfSingleBook/{ISBN}")]
-        public ActionResult<BookDTO> ShowDetailsOfSingleBook(string ISBN)
+        public ActionResult<BookDetailsDTO> ShowDetailsOfSingleBook(string ISBN)
         {
             try
             {
                 var selectedBook = _bookService.GetBookByISBN(ISBN);
-                return Ok(_bookMapper.BookToDTO(selectedBook));
+                return Ok(_bookMapper.BookToDetailsDTO(selectedBook));
 
             }
-            catch (Exception bookEx)
+            catch (BookException bookEx)
             {
                 return BadRequest(bookEx.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
 
         }
