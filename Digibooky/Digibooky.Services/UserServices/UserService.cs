@@ -45,14 +45,14 @@ namespace Digibooky.Services.UserServices
             UsersDatabase.users.Add(user);
         }
 
-        public void RegisterAsLibrarian(long userINSS)
+        public void UpdateInformation(User.Roles userRole, long userINSS)
         {
             var doesUserExist = UsersDatabase.users.Any(dbUser => dbUser.INSS == userINSS);
 
             if (doesUserExist)
             {
                 UsersDatabase.users.First(dbUser => dbUser.INSS == userINSS)
-                    .UserRoles.Add(User.Roles.librarian);
+                    .UserRoles.Add(userRole);
             }
             else
             {

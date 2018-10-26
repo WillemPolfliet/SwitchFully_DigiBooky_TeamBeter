@@ -104,7 +104,7 @@ namespace Digibooky.Services.Tests.UserServices
         {
             IUserService userService = new UserService();
             var user = UsersDatabase.users[0];
-            userService.RegisterAsLibrarian(user.INSS);
+            userService.UpdateInformation(User.Roles.librarian, user.INSS);
 
             var rolesActual = UsersDatabase.users.FirstOrDefault(usr => usr.ID == user.ID).UserRoles;
             var rolesExpected = new List<User.Roles>() { User.Roles.member, User.Roles.admin, User.Roles.librarian };

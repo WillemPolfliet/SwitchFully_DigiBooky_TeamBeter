@@ -23,6 +23,8 @@ namespace Digibooky.API.Controllers.Users
             _userMapper = userMapper;
         }
 
+        public object UserDatabase { get; private set; }
+
         [AllowAnonymous]
         [HttpGet]
         public ActionResult<List<UserDTO>> GetAllUsers()
@@ -51,23 +53,23 @@ namespace Digibooky.API.Controllers.Users
 
         [Authorize(Roles = "admin")]
         [HttpPut]
-        [Route("RegisterLibrarian/{INSS}")]
-        public ActionResult<User> RegisterAsLibrarian(long INSS)
+        [Route("{INSS}")]
+        public ActionResult<User> UpdateUserDetails([FromQuery]User.Roles newRole, [FromRoute] long INSS)
         {
             try
-            {
-                _userService.RegisterAsLibrarian(INSS);
-                return Ok();
-            }
-            catch (UserException userEx)
-            {
-                return BadRequest(userEx.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
+                {
+                    _userService.UpdateInformation(newRole, INSS);
+                    return Ok();
+                }
+                catch (UserException userEx)
+                {
+                    return BadRequest(userEx.Message);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
             }
         }
 
     }
-}

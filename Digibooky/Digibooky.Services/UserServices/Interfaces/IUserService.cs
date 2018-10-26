@@ -10,7 +10,7 @@ namespace Digibooky.Services.UserServices.Interfaces
     {
         void Register(User user);
         List<User> GetAllUsers();
-        void RegisterAsLibrarian(long userINSS);
+        void UpdateInformation(User.Roles newRole, long userINSS);
         Task<User> Authenticate(string username, string password);
     }
 }

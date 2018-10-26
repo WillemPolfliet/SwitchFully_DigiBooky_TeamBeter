@@ -4,6 +4,7 @@ using Digibooky.Domain.Users;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -36,7 +37,7 @@ namespace Digibooky.API.Tests.UsersController
                 .WithLastName("Lastname")
                 .WithEmail("user01@user.com")
                 .WithPassword("Password123")
-                .WithRole(User.Roles.member)
+                .WithRole(User.Roles.admin)
                 .WithStreet("Street")
                 .WithStreetNumber("5A")
                 .WithPostalCode(2800)
@@ -49,7 +50,7 @@ namespace Digibooky.API.Tests.UsersController
                 .WithLastName("Lastname")
                 .WithEmail("user011@user.com")
                 .WithPassword("Password123")
-                .WithRole(User.Roles.member)
+                .WithRole()
                 .WithStreet("Street")
                 .WithStreetNumber("5A")
                 .WithPostalCode(2800)
@@ -62,7 +63,7 @@ namespace Digibooky.API.Tests.UsersController
                 .WithLastName("Lastname")
                 .WithEmail("user012@user.com")
                 .WithPassword("Password123")
-                .WithRole(User.Roles.member)
+                .WithRole()
                 .WithStreet("Street")
                 .WithStreetNumber("5A")
                 .WithPostalCode(2800)
@@ -101,7 +102,7 @@ namespace Digibooky.API.Tests.UsersController
                 .Build();
 
             var content = JsonConvert.SerializeObject(userToRegister);
-            var stringContent = new StringContent(content, Encoding.UTF8, "application/json"); 
+            var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
 
             var response = await _client.PostAsync("/api/users", stringContent);
 
@@ -135,8 +136,30 @@ namespace Digibooky.API.Tests.UsersController
             Assert.Equal(3, UsersDatabase.users.Count);
         }
 
-        //[Fact]
-        //public async Task RegisterLibrarian_Specific
+        [Fact]
+        public async Task GivenUserINSS_WhenAdminRegistersUserAsLibrarian_GivenUSerHAsNEwRole()
+        {
+            var username = UsersDatabase.users[0].Email;
+            var password = UsersDatabase.users[0].Password;
+            var inss = UsersDatabase.users[1].INSS;
+
+            _client.DefaultRequestHeaders.Authorization = CreateBasicHeader(username, password);
+
+            var content = JsonConvert.SerializeObject(User.Roles.librarian);
+
+            var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
+
+            var response = await _client.PutAsync($"/api/users/{inss}", stringContent);
+
+            Assert.True(response.IsSuccessStatusCode);
+            Assert.Equal(2, UsersDatabase.users[1].UserRoles.Count);
+        }
+
+        public AuthenticationHeaderValue CreateBasicHeader(string username, string password)
+        {
+            byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(username + ":" + password);
+            return new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+        }
     }
 
 
