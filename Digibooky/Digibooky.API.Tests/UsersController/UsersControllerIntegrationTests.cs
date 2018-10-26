@@ -11,14 +11,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Digibooky.API.Tests
+namespace Digibooky.API.Tests.UsersController
 {
-    public class UserControllerIntegrationTests
+    public class UsersControllerIntegrationTests
     {
         private readonly TestServer _server;
         private readonly HttpClient _client;
 
-        public UserControllerIntegrationTests()
+        public UsersControllerIntegrationTests()
         {
             _server = new TestServer(new WebHostBuilder().UseStartup<Startup>());
             _client = _server.CreateClient();
