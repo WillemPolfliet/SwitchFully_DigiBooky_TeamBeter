@@ -11,8 +11,6 @@ namespace Digibooky.API.Controllers.Users
     {
         public User DTORegisterToUser(UserDTORegister userDTORegister)
         {
-            var userRole = (Roles)Enum.Parse(typeof(Roles), userDTORegister.UserRole);
-
             var user = UserBuilder.CreateUser()
                 .WithINSS(userDTORegister.INSS)
                 .WithFirstName(userDTORegister.FirstName)

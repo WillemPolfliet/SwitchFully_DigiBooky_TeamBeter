@@ -11,13 +11,7 @@ namespace Digibooky.Services.Tests.BookServices
 {
 	public class BookServiceTests
 	{
-		private readonly IBookService bookservice;
-
-		public BookServiceTests(IBookService bookservice)
-		{
-			this.bookservice = bookservice;
-		}
-
+		
 		public static void Initialize()
 		{
 			BooksDatabase.booksDb.Clear();
@@ -38,7 +32,7 @@ namespace Digibooky.Services.Tests.BookServices
 		{
 			Initialize();
 
-			BookService bookservice = new BookService();
+			IBookService bookservice = new BookService();
 
 
 			var actual = bookservice.GetAllBooks();

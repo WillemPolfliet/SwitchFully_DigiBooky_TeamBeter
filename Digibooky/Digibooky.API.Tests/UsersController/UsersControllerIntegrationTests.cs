@@ -134,6 +134,9 @@ namespace Digibooky.API.Tests.UsersController
 
             Assert.Equal(3, UsersDatabase.users.Count);
         }
+
+        //[Fact]
+        //public async Task RegisterLibrarian_Specific
     }
 
 

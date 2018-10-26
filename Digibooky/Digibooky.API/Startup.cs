@@ -25,6 +25,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Reflection;
+using Microsoft.AspNetCore.Authentication;
+using Digibooky.API.Helpers;
 
 namespace Digibooky.API
 {
@@ -48,7 +50,10 @@ namespace Digibooky.API
             services.AddSingleton<ILendingService, LendingService>();
             services.AddSingleton<ILendingMapper, LendingMapper>();
 
-			services.AddSwagger();
+            services.AddAuthentication("BasicAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
+            services.AddSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +70,7 @@ namespace Digibooky.API
 					PropertyNameHandling.CamelCase;
 			});
 
+            app.UseAuthentication();
 
 			app.UseMvc();
 

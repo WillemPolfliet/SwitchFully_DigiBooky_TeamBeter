@@ -50,7 +50,7 @@ namespace Digibooky.API.Controllers.Users
         }
 
         [Authorize(Roles = "admin")]
-        [HttpPost]
+        [HttpPut]
         [Route("RegisterLibrarian/{INSS}")]
         public ActionResult<User> RegisterAsLibrarian(long INSS)
         {

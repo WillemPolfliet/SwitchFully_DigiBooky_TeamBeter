@@ -1,18 +1,16 @@
 ﻿using Digibooky.API.Controllers.Books;
 using Digibooky.Databases;
-using Digibooky.Domain.Books;
 using Digibooky.Domain.Authors;
+using Digibooky.Domain.Books;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using System.Net;
 
 namespace Digibooky.API.Tests.BooksController
 {
@@ -57,7 +55,7 @@ namespace Digibooky.API.Tests.BooksController
         [Fact]
         public async Task GetSpecificBookByValidISBN_WhenGiveListOfBook_ThenReturnSpecificBook()
         {
-            var response = await _client.GetAsync($"/api/books/ShowDetailsOfSingleBook/{BooksDatabase.booksDb[0].Isbn}");
+            var response = await _client.GetAsync($"/api/books/{BooksDatabase.booksDb[0].Isbn}");
             var responseString = await response.Content.ReadAsStringAsync();
             var bookDTO = JsonConvert.DeserializeObject<BookDTO>(responseString);
 
@@ -68,7 +66,7 @@ namespace Digibooky.API.Tests.BooksController
         [Fact]
         public async Task GetSpecificBookByiNValidISBN_WhenGiveListOfBook_ThenReturnSpecificBook()
         {
-            var response = await _client.GetAsync("/api/books/ShowDetailsOfSingleBook/12345");
+            var response = await _client.GetAsync("/api/books/12345");
 
             Assert.True(response.StatusCode == HttpStatusCode.BadRequest);
         }

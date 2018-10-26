@@ -106,11 +106,16 @@ namespace Digibooky.Domain.Users
             return this;
         }
 
-        public UserBuilder WithRole()
+        public UserBuilder WithRole(User.Roles role = Roles.member)
         {
             this.UserRole = new List<Roles>() { User.Roles.member };
+            if (role != Roles.member)
+            {
+                UserRole.Add(role);
+            }
             return this;
         }
+        
 
         public UserBuilder WithStreet(string street)
         {

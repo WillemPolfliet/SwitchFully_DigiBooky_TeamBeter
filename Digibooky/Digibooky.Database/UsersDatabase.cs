@@ -11,7 +11,7 @@ namespace Digibooky.Databases
                 .WithLastName("Lastname")
                 .WithEmail("user@user.com")
                 .WithPassword("Password123")
-                .WithRole()
+                .WithRole(User.Roles.admin)
                 .WithStreet("Street")
                 .WithStreetNumber("5A")
                 .WithPostalCode(2800)
