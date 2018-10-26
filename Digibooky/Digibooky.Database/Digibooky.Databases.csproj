@@ -8,4 +8,16 @@
     <ProjectReference Include="..\Digibooky.Domain\Digibooky.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="DB_InFiles\uniqueAuthorsWithId.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="DB_InFiles\uniqueBooksWithAuthorId.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="DB_InFiles\uniqueBooksWithBookIdAndAuthorId.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
