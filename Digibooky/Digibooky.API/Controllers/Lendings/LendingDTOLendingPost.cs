@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Digibooky.API.Controllers.Lendings.Interfaces
+namespace Digibooky.API.Controllers.Lendings
 {
 	public class LendingDTOLendingPost
 	{
