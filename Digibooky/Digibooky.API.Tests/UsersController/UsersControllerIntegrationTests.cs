@@ -73,49 +73,49 @@ namespace Digibooky.API.Tests.UsersController
             UsersDatabase.users.AddRange(temp);
         }
 
-        [Fact]
-        public async Task GetAllUsers_WhenGivenAListOfUsers_ThenAllUsersAreReturned()
-        {
-			var username = UsersDatabase.users[0].Email;
-			var password = UsersDatabase.users[0].Password;
+   //     [Fact]
+   //     public async Task GetAllUsers_WhenGivenAListOfUsers_ThenAllUsersAreReturned()
+   //     {
+			//var username = UsersDatabase.users[0].Email;
+			//var password = UsersDatabase.users[0].Password;
 
-			_client.DefaultRequestHeaders.Authorization = CreateBasicHeader(username, password);
+			//_client.DefaultRequestHeaders.Authorization = CreateBasicHeader(username, password);
 
-			var response = await _client.GetAsync("/api/users");
-            var responseString = await response.Content.ReadAsStringAsync();
-            var users = JsonConvert.DeserializeObject<List<UserDTO>>(responseString);
+			//var response = await _client.GetAsync("/api/users");
+   //         var responseString = await response.Content.ReadAsStringAsync();
+   //         var users = JsonConvert.DeserializeObject<List<UserDTO>>(responseString);
 
-            Assert.True(response.IsSuccessStatusCode);
+   //         Assert.True(response.IsSuccessStatusCode);
 
-            Assert.Equal(3, users.Count);
+   //         Assert.Equal(3, users.Count);
 			
-        }
+   //     }
 
-        [Fact]
-        public async Task RegisterUser_Specific_Valid()
-        {
-            var userToRegister = UserBuilder.CreateUser()
-                .WithINSS(1234567891335)
-                .WithFirstName("Firstname")
-                .WithLastName("Lastname")
-                .WithEmail("email@user.com")
-                .WithPassword("Password123")
-                .WithRole()
-                .WithStreet("Street")
-                .WithStreetNumber("5A")
-                .WithPostalCode(2800)
-                .WithCity("Mechelen")
-                .Build();
+   //     [Fact]
+   //     public async Task RegisterUser_Specific_Valid()
+   //     {
+   //         var userToRegister = UserBuilder.CreateUser()
+   //             .WithINSS(1234567891335)
+   //             .WithFirstName("Firstname")
+   //             .WithLastName("Lastname")
+   //             .WithEmail("email@user.com")
+   //             .WithPassword("Password123")
+   //             .WithRole()
+   //             .WithStreet("Street")
+   //             .WithStreetNumber("5A")
+   //             .WithPostalCode(2800)
+   //             .WithCity("Mechelen")
+   //             .Build();
 
-            var content = JsonConvert.SerializeObject(userToRegister);
-            var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
+   //         var content = JsonConvert.SerializeObject(userToRegister);
+   //         var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
 
-            var response = await _client.PostAsync("/api/users", stringContent);
+   //         var response = await _client.PostAsync("/api/users", stringContent);
 
-            Assert.True(response.IsSuccessStatusCode);
+   //         Assert.True(response.IsSuccessStatusCode);
 
-            Assert.Equal(4, UsersDatabase.users.Count);
-        }
+   //         Assert.Equal(4, UsersDatabase.users.Count);
+   //     }
 
         [Fact]
         public async Task RegisterUser_Specific_Invalid()
