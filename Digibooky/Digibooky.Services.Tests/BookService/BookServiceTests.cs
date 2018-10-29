@@ -96,15 +96,27 @@ namespace Digibooky.Services.Tests.BookServices
             Assert.Empty(result);
         }
 
+        [Fact]
+        public void GivenAListOfBooks_WhenSearchingOnAuthor_EmptyList()
+        {
+            List<Book> result = bookService.FindAllBooks_SearchByAuthor("azert");
 
+            Assert.Empty(result);
+        }
+        [Fact]
+        public void GivenAListOfBooks_WhenSearchingOnAuthorFirstName_ListOfBooksIsReturned()
+        {
+            List<Book> result = bookService.FindAllBooks_SearchByAuthor("o");
+            Assert.Equal(3, result.Count);
 
-        //[Fact]
-        //public void GivenAListOfBooks_WhenSearchingOnAuthor_ListOfBooksIsReturned()
-        //{
-        //    List<Book> result = bookService.FindAllBooks_SearchByAuthor("azert");
+        }
+        [Fact]
+        public void GivenAListOfBooks_WhenSearchingOnAuthorLastName_ListOfBooksIsReturned()
+        {
+            List<Book> result = bookService.FindAllBooks_SearchByAuthor("A");
 
-        //    Assert.Empty(result);
-        //}
+            Assert.Equal(4, result.Count);
+        }
 
     }
 }

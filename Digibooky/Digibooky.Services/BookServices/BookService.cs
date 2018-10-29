@@ -43,6 +43,11 @@ namespace Digibooky.Services.BookServices
         {
             return FindAllBooks(givenMatchingString, book => book.Isbn.Contains(givenMatchingString));
         }
+        public List<Book> FindAllBooks_SearchByAuthor(string givenMatchingString)
+        {
+            return FindAllBooks(givenMatchingString,
+                book => (book.AuthorFirstName + book.AuthorLastName).ToLower().Contains(givenMatchingString.ToLower()));
+        }
 
         private List<Book> FindAllBooks(string givenMatchingString, Predicate<Book> ValueToCheck)
         {
