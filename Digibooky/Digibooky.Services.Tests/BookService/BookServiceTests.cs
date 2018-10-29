@@ -73,13 +73,6 @@ namespace Digibooky.Services.Tests.BookServices
 
             Assert.Equal(2, result.Count);
         }
-        [Fact]
-        public void GivenAListOfBooks_WhenSearchingOnTitle_MatchingBooksAreReturned()
-        {
-            List<Book> result = bookService.FindAllBooks_SearchByTitle("");
-
-            Assert.Equal(4, result.Count);
-        }
 
         [Fact]
         public void GivenAListOfBooks_WhenSearchingOnISBNWithString_MatchingBooksAreReturned()

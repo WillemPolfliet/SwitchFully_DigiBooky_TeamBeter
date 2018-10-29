@@ -10,8 +10,10 @@ using System.Text.RegularExpressions;
 
 namespace Digibooky.Services.BookServices
 {
-    public class BookService : IBookService
 
+
+
+    public class BookService : IBookService
     {
         public List<Book> GetAllBooks()
         {
@@ -33,28 +35,22 @@ namespace Digibooky.Services.BookServices
         }
 
 
-
         public List<Book> FindAllBooks_SearchByTitle(string givenMatchingString)
         {
-            List<Book> listToReturn = new List<Book>();
-
-            foreach (var book in BooksDatabase.booksDb)
-            {
-                if (book.Title.ToLower().Contains(givenMatchingString.ToLower()))
-                {
-                    listToReturn.Add(book);
-                }
-            }
-            return listToReturn;
+            return FindAllBooks(givenMatchingString, book => book.Title.ToLower().Contains(givenMatchingString.ToLower()));
+        }
+        public List<Book> FindAllBooks_SearchByISBN(string givenMatchingString)
+        {
+            return FindAllBooks(givenMatchingString, book => book.Isbn.Contains(givenMatchingString));
         }
 
-        public List<Book> FindAllBooks_SearchByISBN(string givenMatchingString)
+        private List<Book> FindAllBooks(string givenMatchingString, Predicate<Book> ValueToCheck)
         {
             List<Book> listToReturn = new List<Book>();
 
             foreach (var book in BooksDatabase.booksDb)
             {
-                if (book.Isbn.Contains(givenMatchingString))
+                if (ValueToCheck(book))
                 {
                     listToReturn.Add(book);
                 }
