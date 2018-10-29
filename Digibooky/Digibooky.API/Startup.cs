@@ -52,6 +52,12 @@ namespace Digibooky.API
             services.AddAuthentication("BasicAuthentication")
                 .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
+			services.AddAuthorization(options =>
+			{
+				options.AddPolicy("MustBeMember", policy => policy.RequireRole("member"));
+				options.AddPolicy("MustBeLibrarian", policy => policy.RequireRole("librarian"));
+				options.AddPolicy("MustBeAdmin", policy => policy.RequireRole("admin"));
+			});
             services.AddSwagger();
         }
 

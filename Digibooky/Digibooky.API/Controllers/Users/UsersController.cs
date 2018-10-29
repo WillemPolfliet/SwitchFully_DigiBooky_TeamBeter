@@ -25,7 +25,7 @@ namespace Digibooky.API.Controllers.Users
 
         public object UserDatabase { get; private set; }
 
-        [AllowAnonymous]
+        [Authorize(Policy = "MustBeAdmin")]
         [HttpGet]
         public ActionResult<List<UserDTO>> GetAllUsers()
         {
@@ -51,7 +51,7 @@ namespace Digibooky.API.Controllers.Users
             }
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Policy = "MustBeAdmin")]
         [HttpPut]
         [Route("{INSS}")]
         public ActionResult<User> UpdateUserDetails([FromQuery]User.Roles newRole, [FromRoute] long INSS)
