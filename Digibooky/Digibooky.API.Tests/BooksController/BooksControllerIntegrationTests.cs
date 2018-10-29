@@ -1,6 +1,5 @@
 ﻿using Digibooky.API.Controllers.Books;
 using Digibooky.Databases;
-using Digibooky.Domain.Authors;
 using Digibooky.Domain.Books;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
@@ -31,10 +30,10 @@ namespace Digibooky.API.Tests.BooksController
 
             var temp = new List<Book>()
                 {
-                    new Book("9789024555147", "Het Franciscus Verbond", new Author(1, "John", "Sack")),
-                    new Book("9789028418028", "Wereldbibliotheekreeks Verloren eer", new Author(2, "Calixthe", "Beyala")),
-                    new Book("9789021006536", "Drie weken in Parijs", new Author(3, "Barbara", "Bradford Taylor")),
-                    new Book("9789063050184", "Icy Sparks", new Author(4, "Gwyn", "Hyman Rubio"))
+                    new Book("9789024555147", "Het Franciscus Verbond", "John", "Sack"),
+                    new Book("9789028418028", "Wereldbibliotheekreeks Verloren eer", "Calixthe", "Beyala"),
+                    new Book("9789021006536", "Drie weken in Parijs", "Barbara", "Bradford Taylor"),
+                    new Book("9789063050184", "Icy Sparks", "Gwyn", "Hyman Rubio")
                 };
 
             BooksDatabase.booksDb.AddRange(temp);

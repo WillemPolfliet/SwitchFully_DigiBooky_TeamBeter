@@ -1,5 +1,4 @@
-﻿using Digibooky.Domain.Authors;
-using Digibooky.Domain.Books.Exceptions;
+﻿using Digibooky.Domain.Books.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +11,10 @@ namespace Digibooky.Domain.Books
         public Guid Id { get; }
         public string Isbn { get; private set; }
         public string Title { get; private set; }
-        public Author Author { get; private set; } //TODO ID ?
+        public string AuthorFirstName { get; private set; }
+        public string AuthorLastName { get; private set; }
 
-        public Book(string isbn, string title, Author author)
+        public Book(string isbn, string title, string authorFirstName, string authorLastName)
         {
             Id = Guid.NewGuid();
 
@@ -33,7 +33,8 @@ namespace Digibooky.Domain.Books
                 throw new BookException("The title is required");
             }
             Title = title;
-            Author = author;
+            AuthorFirstName = authorFirstName;
+            AuthorLastName = authorLastName;
         }
     }
 }

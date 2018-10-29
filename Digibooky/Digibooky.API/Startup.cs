@@ -4,13 +4,14 @@ using Digibooky.API.Controllers.Lendings;
 using Digibooky.API.Controllers.Lendings.Interfaces;
 using Digibooky.API.Controllers.Users;
 using Digibooky.API.Controllers.Users.Interfaces;
+using Digibooky.API.Helpers;
 using Digibooky.Services.BookServices;
 using Digibooky.Services.BookServices.Interfaces;
-using Digibooky.Services.DatabaseServices;
 using Digibooky.Services.LendingServices;
 using Digibooky.Services.LendingServices.Interfaces;
 using Digibooky.Services.UserServices;
 using Digibooky.Services.UserServices.Interfaces;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -23,10 +24,8 @@ using NSwag.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Reflection;
-using Microsoft.AspNetCore.Authentication;
-using Digibooky.API.Helpers;
+using System.Threading.Tasks;
 
 namespace Digibooky.API
 {
@@ -64,21 +63,21 @@ namespace Digibooky.API
                 app.UseDeveloperExceptionPage();
             }
 
-			app.UseSwaggerUi3WithApiExplorer(settings =>
-			{
-				settings.GeneratorSettings.DefaultPropertyNameHandling =
-					PropertyNameHandling.CamelCase;
-			});
+            app.UseSwaggerUi3WithApiExplorer(settings =>
+            {
+                settings.GeneratorSettings.DefaultPropertyNameHandling =
+                    PropertyNameHandling.CamelCase;
+            });
 
             app.UseAuthentication();
 
-			app.UseMvc();
+            app.UseMvc();
 
-			app.Run(async context =>
-			{
-				context.Response.Redirect("/swagger");
-			});
+            app.Run(async context =>
+            {
+                context.Response.Redirect("/swagger");
+            });
 
-		}
-	}
+        }
+    }
 }

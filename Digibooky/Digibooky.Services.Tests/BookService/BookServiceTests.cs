@@ -1,5 +1,4 @@
 ﻿using Digibooky.Databases;
-using Digibooky.Domain.Authors;
 using Digibooky.Domain.Books;
 using Digibooky.Domain.Books.Exceptions;
 using Digibooky.Services.BookServices;
@@ -19,10 +18,10 @@ namespace Digibooky.Services.Tests.BookServices
 
             var temp = new List<Book>()
                 {
-                    new Book("9789024555147", "Het Franciscus Verbond", new Author(1, "John", "Sack")),
-                    new Book("9789028418028", "Wereldbibliotheekreeks Verloren eer", new Author(2, "Calixthe", "Beyala")),
-                    new Book("9789021006536", "Drie weken in Parijs", new Author(3, "Barbara", "Bradford Taylor")),
-                    new Book("9789063050184", "Icy Sparks", new Author(4, "Gwyn", "Hyman Rubio"))
+                    new Book("9789024555147", "Het Franciscus Verbond",  "John", "Sack"),
+                    new Book("9789028418028", "Wereldbibliotheekreeks Verloren eer", "Calixthe", "Beyala"),
+                    new Book("9789021006536", "Drie weken in Parijs", "Barbara", "Bradford Taylor"),
+                    new Book("9789063050184", "Icy Sparks", "Gwyn", "Hyman Rubio")
                 };
 
             BooksDatabase.booksDb.AddRange(temp);
@@ -58,7 +57,7 @@ namespace Digibooky.Services.Tests.BookServices
         [Fact]
         public void GivenBookDatabase_WhenRegisterBook_ThenBookAddedToDatabase()
         {
-            Book bookToRegister = new Book("9789024555147", "Het Franciscus Verbond", new Author(1, "John", "Sack"));
+            Book bookToRegister = new Book("9789024555147", "Het Franciscus Verbond", "John", "Sack");
 
             bookService.Register(bookToRegister);
 
