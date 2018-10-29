@@ -43,6 +43,11 @@ namespace Digibooky.Services.BookServices
         {
             return FindAllBooks(givenMatchingString, book => book.Isbn.Contains(givenMatchingString));
         }
+        public List<Book> FindAllBooks_SearchByAuthor(string givenMatchingString)
+        {
+            return FindAllBooks(givenMatchingString,
+                book => (book.AuthorFirstName + book.AuthorLastName).ToLower().Contains(givenMatchingString.ToLower()));
+        }
 
         private List<Book> FindAllBooks(string givenMatchingString, Predicate<Book> ValueToCheck)
         {
@@ -56,6 +61,34 @@ namespace Digibooky.Services.BookServices
                 }
             }
             return listToReturn;
+        }
+
+        public void UpdateInformation(string iSBN, string title, string authorFirstName, string authorLastName)
+        {
+            var doesBookExist = BooksDatabase.booksDb.Any(dbBook => dbBook.Isbn == iSBN);
+
+            if (doesBookExist)
+            {
+                if (!string.IsNullOrWhiteSpace(title))
+                {
+                    BooksDatabase.booksDb.First(dbBook => dbBook.Isbn == iSBN)
+                         .Title = title;
+                }
+                if(!string.IsNullOrWhiteSpace(authorFirstName))
+                {
+                    BooksDatabase.booksDb.First(dbBook => dbBook.Isbn == iSBN)
+                         .AuthorFirstName = authorFirstName;
+                }
+                if (!string.IsNullOrWhiteSpace(authorLastName))
+                {
+                    BooksDatabase.booksDb.First(dbBook => dbBook.Isbn == iSBN)
+                         .AuthorLastName = authorLastName;
+                }
+            }
+            else
+            {
+                throw new BookException("This book does not exist in our database");
+            }
         }
     }
 }

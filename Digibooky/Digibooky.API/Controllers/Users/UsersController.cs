@@ -57,19 +57,19 @@ namespace Digibooky.API.Controllers.Users
         public ActionResult<User> UpdateUserDetails([FromQuery]User.Roles newRole, [FromRoute] long INSS)
         {
             try
-                {
-                    _userService.UpdateInformation(newRole, INSS);
-                    return Ok();
-                }
-                catch (UserException userEx)
-                {
-                    return BadRequest(userEx.Message);
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(ex.Message);
-                }
+            {
+                _userService.UpdateInformation(newRole, INSS);
+                return Ok();
+            }
+            catch (UserException userEx)
+            {
+                return BadRequest(userEx.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
-
     }
+
+}

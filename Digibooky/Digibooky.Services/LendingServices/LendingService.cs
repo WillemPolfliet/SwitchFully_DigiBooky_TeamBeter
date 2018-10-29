@@ -15,11 +15,11 @@ namespace Digibooky.Services.LendingServices
         {
             if (!DoesUserINSSExist(inss))
             {
-                throw new LendingException("User INSS does not exist");//TODO UserException?
+                throw new LendingException("User INSS does not exist");
             }
             if (!DoesBookISBNExist(isbn))
             {
-                throw new LendingException("Book ISBN does not exist");//TODO BookException?
+                throw new LendingException("Book ISBN does not exist");
             }
             if (BookIsAlreadyLent(isbn))
             {
@@ -58,7 +58,7 @@ namespace Digibooky.Services.LendingServices
 
             if (BookToReturn == null)
             {
-                throw new LendingException("Lend does not excist");
+                throw new LendingException("Lend does not exist");
             }
 
             BookToReturn.DateReturned = DateTime.Now.Date;
