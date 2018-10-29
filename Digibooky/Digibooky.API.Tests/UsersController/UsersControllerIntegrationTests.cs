@@ -76,13 +76,19 @@ namespace Digibooky.API.Tests.UsersController
         [Fact]
         public async Task GetAllUsers_WhenGivenAListOfUsers_ThenAllUsersAreReturned()
         {
-            var response = await _client.GetAsync("/api/users");
+			var username = UsersDatabase.users[0].Email;
+			var password = UsersDatabase.users[0].Password;
+
+			_client.DefaultRequestHeaders.Authorization = CreateBasicHeader(username, password);
+
+			var response = await _client.GetAsync("/api/users");
             var responseString = await response.Content.ReadAsStringAsync();
             var users = JsonConvert.DeserializeObject<List<UserDTO>>(responseString);
 
             Assert.True(response.IsSuccessStatusCode);
 
             Assert.Equal(3, users.Count);
+			
         }
 
         [Fact]
@@ -119,7 +125,7 @@ namespace Digibooky.API.Tests.UsersController
                 .WithFirstName("Firstname")
                 .WithLastName("Lastname")
                 .WithPassword("Password123")
-                .WithRole(User.Roles.member)
+                .WithRole()
                 .WithStreet("Street")
                 .WithStreetNumber("5A")
                 .WithPostalCode(2800)
@@ -141,6 +147,7 @@ namespace Digibooky.API.Tests.UsersController
         {
             var username = UsersDatabase.users[0].Email;
             var password = UsersDatabase.users[0].Password;
+
             var inss = UsersDatabase.users[1].INSS;
 
             _client.DefaultRequestHeaders.Authorization = CreateBasicHeader(username, password);

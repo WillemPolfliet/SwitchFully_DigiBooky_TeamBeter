@@ -54,9 +54,9 @@ namespace Digibooky.API
 
 			services.AddAuthorization(options =>
 			{
-				options.AddPolicy("MustBeMember", policy => policy.RequireRole("member"));
-				options.AddPolicy("MustBeLibrarian", policy => policy.RequireRole("librarian"));
-				options.AddPolicy("MustBeAdmin", policy => policy.RequireRole("admin"));
+				options.AddPolicy("MustBeMember", policy => policy.RequireClaim("member"));
+				options.AddPolicy("MustBeLibrarian", policy => policy.RequireClaim("librarian"));
+				options.AddPolicy("MustBeAdmin", policy => policy.RequireClaim("admin"));
 			});
             services.AddSwagger();
         }
@@ -69,15 +69,16 @@ namespace Digibooky.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseSwaggerUi3WithApiExplorer(settings =>
-            {
-                settings.GeneratorSettings.DefaultPropertyNameHandling =
-                    PropertyNameHandling.CamelCase;
-            });
 
             app.UseAuthentication();
 
-            app.UseMvc();
+			app.UseSwaggerUi3WithApiExplorer(settings =>
+			{
+				settings.GeneratorSettings.DefaultPropertyNameHandling =
+					PropertyNameHandling.CamelCase;
+			});
+
+			app.UseMvc();
 
             app.Run(async context =>
             {

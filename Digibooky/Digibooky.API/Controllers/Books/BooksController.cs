@@ -72,9 +72,9 @@ namespace Digibooky.API.Controllers.Books
             return Ok(books);
         }
 
-        [Authorize(Roles = "admin, librarian")]
+        [Authorize(Policy = "MustBeAdmin")]
         [HttpPost]
-        public ActionResult<Book> Register([FromBody] BookDTORegister bookDTORegister)
+        public ActionResult<Book> RegisterABook([FromBody] BookDTORegister bookDTORegister)
         {
             try
             {
@@ -92,8 +92,8 @@ namespace Digibooky.API.Controllers.Books
             }
         }
 
-        [Authorize(Roles = "librarian")]
-        [HttpPut]
+		[Authorize(Policy = "MustBeAdmin")]
+		[HttpPut]
         [Route("[action]/{ISBN}")]
         public ActionResult<Book> UpdateInformation([FromRoute]string ISBN, [FromBody] BookDTOUpdate bookDTOUpdate)
         {
