@@ -11,14 +11,16 @@ namespace Digibooky.Domain.Lendings
         public string Isbn { get; set; }
         public DateTime Date { get; set; }
         public DateTime ReturnDate { get; set; }
+        public DateTime? DateReturned { get; set; }
 
-        public Lending(long inss, string isbn, DateTime date, DateTime returnDate)
+        public Lending(long inss, string isbn)
         {
             ID = Guid.NewGuid();
             INSS = inss;
             Isbn = isbn;
-            Date = date;
-            ReturnDate = returnDate;
+            Date = DateTime.Now.Date;
+            ReturnDate = DateTime.Now.Date.AddDays(21);
+            DateReturned = null;
         }
     }
 }

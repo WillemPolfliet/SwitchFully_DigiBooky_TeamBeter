@@ -11,16 +11,18 @@ namespace Digibooky.API.Controllers.Lendings
         public Guid ID { get; set; }
         public long Inss { get; set; }
         public string Isbn { get; set; }
-        public DateTime Date { get; set; }
-        public DateTime ReturnDate { get; set; }
+        public string Date { get; set; }
+        public string ReturnDate { get; set; }
+        public string DateReturned { get; set; }
 
         public LendingDTO(Lending lending)
         {
             ID = lending.ID;
             Inss = lending.INSS;
             Isbn = lending.Isbn;
-            Date = lending.Date;
-            ReturnDate = lending.ReturnDate;
+            Date = lending.Date.ToString();
+            ReturnDate = lending.ReturnDate.ToString();
+            DateReturned = lending.DateReturned.ToString();
         }
 
     }

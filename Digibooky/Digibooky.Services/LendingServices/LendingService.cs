@@ -1,11 +1,11 @@
 ﻿using Digibooky.Databases;
 using Digibooky.Domain.Lendings;
+using Digibooky.Domain.Lendings.Exceptions;
+using Digibooky.Services.LendingServices.Interfaces;
 using System;
 using System.Collections.Generic;
-using Digibooky.Services.LendingServices.Interfaces;
-using System.Text;
-using Digibooky.Domain.Lendings.Exceptions;
 using System.Linq;
+using System.Text;
 
 namespace Digibooky.Services.LendingServices
 {
@@ -13,20 +13,20 @@ namespace Digibooky.Services.LendingServices
     {
         public void LendBook(long inss, string isbn)
         {
-			if (!DoesUserINSSExist(inss))
-			{
-				throw new LendingException("User INSS does not exist");//TODO UserException?
-			}
-			if (!DoesBookISBNExist(isbn))
-			{
-				throw new LendingException("Book ISBN does not exist");//TODO BookException?
-			}
+            if (!DoesUserINSSExist(inss))
+            {
+                throw new LendingException("User INSS does not exist");//TODO UserException?
+            }
+            if (!DoesBookISBNExist(isbn))
+            {
+                throw new LendingException("Book ISBN does not exist");//TODO BookException?
+            }
             if (BookIsAlreadyLent(isbn))
             {
                 throw new LentOutException("Book is currently not available, it is already lent out.");
             }
 
-            Lending lending = new Lending(inss, isbn, DateTime.Today.Date, DateTime.Today.Date.AddDays(21));
+            Lending lending = new Lending(inss, isbn);
 
             LendingsDatabase.Lendings.Add(lending);
         }
@@ -37,19 +37,35 @@ namespace Digibooky.Services.LendingServices
         }
 
         private bool DoesBookISBNExist(string isbn)
-		{
-			return BooksDatabase.booksDb.Any(book => book.Isbn == isbn);
-		}
+        {
+            return BooksDatabase.booksDb.Any(book => book.Isbn == isbn);
+        }
 
-		private bool DoesUserINSSExist(long inss)
-		{
-			return UsersDatabase.users.Any(user => user.INSS == inss);
-		}
+        private bool DoesUserINSSExist(long inss)
+        {
+            return UsersDatabase.users.Any(user => user.INSS == inss);
+        }
 
-		public List<Lending> GetAll()
+        public List<Lending> GetAll()
         {
             return LendingsDatabase.Lendings;
         }
 
+        public void ReturnBook(string guid)
+        {
+
+            var BookToReturn = LendingsDatabase.Lendings.FirstOrDefault(LendBook => LendBook.ID.ToString() == guid);
+
+            if (BookToReturn == null)
+            {
+                throw new LendingException("Lend does not excist");
+            }
+
+            BookToReturn.DateReturned = DateTime.Now.Date;
+
+            if (BookToReturn.DateReturned > BookToReturn.ReturnDate)
+            { throw new LentOutException("Lend is overdue"); }
+
+        }
     }
 }
