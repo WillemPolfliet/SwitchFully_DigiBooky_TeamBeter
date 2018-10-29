@@ -1,11 +1,15 @@
 ﻿using Digibooky.API.Controllers.Books.Interfaces;
 using Digibooky.Domain.Books;
 using Digibooky.Domain.Books.Exceptions;
+using Digibooky.Services.BookServices;
 using Digibooky.Services.BookServices.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Digibooky.API.Controllers.Books
 {
@@ -39,7 +43,6 @@ namespace Digibooky.API.Controllers.Books
             {
                 var selectedBook = _bookService.GetBookByISBN(ISBN);
                 return Ok(_bookMapper.BookToDetailsDTO(selectedBook));
-
             }
             catch (BookException bookEx)
             {
@@ -51,25 +54,22 @@ namespace Digibooky.API.Controllers.Books
             }
         }
 
-        [Authorize(Roles = "admin, librarian")]
-        [HttpPost]
-        public ActionResult<Book> Register([FromBody] BookDTORegister bookDTORegister)
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("[action]/{title}")]
+        public ActionResult<List<BookDetailsDTO>> SearchByTitle([FromRoute]string title)
         {
-            try
-            {
-                Book book = _bookMapper.BookDTORegisterToBook(bookDTORegister);
-                _bookService.Register(book);
-                return Ok();
-            }
-            catch(BookException bookEx)
-            {
-                return BadRequest(bookEx.Message);
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var books = _bookService.FindAllBooks_SearchByTitle(title);
+            return Ok(books);
         }
 
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("[action]/{ISBN}")]
+        public ActionResult<List<BookDetailsDTO>> SearchByISBN([FromRoute]string ISBN)
+        {
+            var books = _bookService.FindAllBooks_SearchByISBN(ISBN);
+            return Ok(books);
+        }
     }
 }
