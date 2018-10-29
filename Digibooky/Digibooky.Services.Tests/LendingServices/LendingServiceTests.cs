@@ -71,12 +71,12 @@ namespace Digibooky.Services.Tests.LendingServices
         public void GivenABooksDBAndAUserDB_WhenLendingABookThatIsInLendingDb_ThenGetException()
         {
             //given
-            BooksDatabase.booksDb.Add(new Domain.Books.Book("1417258369", "titlev2", new Domain.Authors.Author(0)));
+            BooksDatabase.booksDb.Add(new Domain.Books.Book("1472583697531", "titlev2", new Domain.Authors.Author(0)));
 
             //when
             LendingService lendingService = new LendingService();
-            lendingService.LendBook(1234567891234, "1417258369");
-            Action act = () => lendingService.LendBook(1234567891234, "1417258369");
+            lendingService.LendBook(1234567891234, "1472583697531");
+            Action act = () => lendingService.LendBook(1234567891234, "1472583697531");
 
             //then
             var exception = Assert.Throws<LentOutException>(act);
