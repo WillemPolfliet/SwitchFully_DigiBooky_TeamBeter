@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Digibooky.API.Controllers.Lendings.Interfaces;
+using Digibooky.Domain.Lendings;
+using Digibooky.Domain.Lendings.Exceptions;
+using Digibooky.Services.LendingServices;
+using Digibooky.Services.LendingServices.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Digibooky.Services.LendingServices;
-using Digibooky.API.Controllers.Lendings.Interfaces;
-using Digibooky.Services.LendingServices.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using Digibooky.Domain.Lendings;
-using Digibooky.Domain.Lendings.Exceptions;
 
 
 namespace Digibooky.API.Controllers.Lendings
@@ -65,6 +65,28 @@ namespace Digibooky.API.Controllers.Lendings
                 return BadRequest(exception.Message);
             }
         }
+
+        [HttpPost]
+        [Route("ReturnBook")]
+        public ActionResult ReturnBook([FromBody]string lendID)
+        {
+            try
+            {
+                _lendingService.ReturnBook(lendID);
+                return Ok();
+            }
+            catch (LentOutException lentoutEx)
+            {
+                return BadRequest(lentoutEx.Message);
+            }
+            catch (LendingException lendingEx)
+            {
+                return BadRequest(lendingEx.Message);
+
+            }
+
+        }
+
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]

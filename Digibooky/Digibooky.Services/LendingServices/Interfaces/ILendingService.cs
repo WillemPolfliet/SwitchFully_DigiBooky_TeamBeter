@@ -9,5 +9,6 @@ namespace Digibooky.Services.LendingServices.Interfaces
     {
         void LendBook(long inss, string isbn);
         List<Lending> GetAll();
+        void ReturnBook(string guid);
     }
 }
