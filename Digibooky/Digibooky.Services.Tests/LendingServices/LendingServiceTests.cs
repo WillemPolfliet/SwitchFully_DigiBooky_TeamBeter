@@ -1,7 +1,6 @@
 ﻿using Digibooky.Databases;
 using Digibooky.Domain.Lendings;
 using Digibooky.Domain.Lendings.Exceptions;
-using Digibooky.Services.DatabaseServices;
 using Digibooky.Services.LendingServices;
 using System;
 using System.Collections.Generic;
@@ -15,7 +14,7 @@ namespace Digibooky.Services.Tests.LendingServices
         [Fact]
         public void GivenCountBeforeLending_WhenLendBook_ThenCountAfterLendingIsPlusOne()
         {
-            BooksDatabase.booksDb.Add(new Domain.Books.Book("1231231231231", "title", new Domain.Authors.Author(0)));
+            BooksDatabase.booksDb.Add(new Domain.Books.Book("1231231231231", "title", "G","J"));
             long inss = UsersDatabase.users[0].INSS;
             string isbn = BooksDatabase.booksDb[0].Isbn;
             int countBeforeLending = LendingsDatabase.Lendings.Count;
@@ -40,7 +39,7 @@ namespace Digibooky.Services.Tests.LendingServices
 		public void GivenABooksDBAndAUserDB_WhenLendingABookWithNonExistingUserINSS_ThenGetException()
 		{
 			//Given
-			BooksDatabase.booksDb.Add(new Domain.Books.Book("1231231231231", "title", new Domain.Authors.Author(0)));
+			BooksDatabase.booksDb.Add(new Domain.Books.Book("1231231231231", "title", "G", "J"));
 
 			//When
 			LendingService lendingService = new LendingService();
@@ -55,7 +54,7 @@ namespace Digibooky.Services.Tests.LendingServices
 		public void GivenABooksDBAndAUserDB_WhenLendingABookWithNonExistingBookISBN_ThenGetException()
 		{
 			//Given
-			BooksDatabase.booksDb.Add(new Domain.Books.Book("1231231231231", "title", new Domain.Authors.Author(0)));
+			BooksDatabase.booksDb.Add(new Domain.Books.Book("1231231231231", "title", "G", "J"));
 
 			//When
 			LendingService lendingService = new LendingService();
@@ -70,7 +69,7 @@ namespace Digibooky.Services.Tests.LendingServices
         public void GivenABooksDBAndAUserDB_WhenLendingABookThatIsInLendingDb_ThenGetException()
         {
             //given
-			BooksDatabase.booksDb.Add(new Domain.Books.Book("1231231231231", "title", new Domain.Authors.Author(0)));
+			BooksDatabase.booksDb.Add(new Domain.Books.Book("1231231231231", "title", "G", "J"));
 
             //when
 			LendingService lendingService = new LendingService();

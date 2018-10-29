@@ -1,12 +1,7 @@
-﻿using Digibooky.API.Controllers.Authors;
-using Digibooky.API.Controllers.Authors.Interfaces;
-using Digibooky.API.Controllers.Books.Interfaces;
+﻿using Digibooky.API.Controllers.Books.Interfaces;
 using Digibooky.Domain.Books;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using static Digibooky.Domain.Books.Book;
 
 namespace Digibooky.API.Controllers.Books
 {
@@ -26,14 +21,12 @@ namespace Digibooky.API.Controllers.Books
 
         public BookDTO BookToDTO(Book givenBook)
         {
-            //TO ASK: DO SAME AS BELOW?
-            AuthorMapper authorMapper = new AuthorMapper();
-
             return new BookDTO
             {
                 Isbn = givenBook.Isbn,
                 Title = givenBook.Title,
-                AuthorDTO = authorMapper.AuthorToDTO(givenBook.Author)
+                AuthorFirstName = givenBook.AuthorFirstName,
+                AuthorLastName = givenBook.AuthorLastName
             };
         }
 
@@ -43,10 +36,14 @@ namespace Digibooky.API.Controllers.Books
             {
                 Isbn = givenBook.Isbn,
                 Title = givenBook.Title,
-                IDAuthor = givenBook.Author.AuthorId,
-                FirstNameAuthor = givenBook.Author.FirstName,
-                LastNameAuthor = givenBook.Author.LastName
+                FirstNameAuthor = givenBook.AuthorFirstName,
+                LastNameAuthor = givenBook.AuthorLastName
             };
+        }
+
+        public Book BookDTOToBook(BookDTO bookDTO)
+        {
+            throw new NotImplementedException();
         }
     }
 }

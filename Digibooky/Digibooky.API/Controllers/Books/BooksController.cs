@@ -54,7 +54,16 @@ namespace Digibooky.API.Controllers.Books
             {
                 return BadRequest(ex.Message);
             }
-
         }
+
+        //[HttpPost]
+        //public ActionResult<Book> Register([FromBody] BookDTO bookDTO)
+        //{
+        //    //try
+        //    //{
+        //    //    Book book = _bookMapper.BookDTOToBook(bookDTO);
+        //    //    _bookService.Register(book);
+        //    //}
+        //}
     }
 }

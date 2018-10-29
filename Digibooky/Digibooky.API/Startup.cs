@@ -6,7 +6,6 @@ using Digibooky.API.Controllers.Users;
 using Digibooky.API.Controllers.Users.Interfaces;
 using Digibooky.Services.BookServices;
 using Digibooky.Services.BookServices.Interfaces;
-using Digibooky.Services.DatabaseServices;
 using Digibooky.Services.LendingServices;
 using Digibooky.Services.LendingServices.Interfaces;
 using Digibooky.Services.UserServices;
