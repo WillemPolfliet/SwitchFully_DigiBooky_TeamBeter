@@ -1,15 +1,11 @@
 ﻿using Digibooky.API.Controllers.Books.Interfaces;
 using Digibooky.Domain.Books;
 using Digibooky.Domain.Books.Exceptions;
-using Digibooky.Services.BookServices;
 using Digibooky.Services.BookServices.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Digibooky.API.Controllers.Books
 {
@@ -60,7 +56,10 @@ namespace Digibooky.API.Controllers.Books
         public ActionResult<List<BookDetailsDTO>> SearchByTitle([FromRoute]string title)
         {
             var books = _bookService.FindAllBooks_SearchByTitle(title);
-            return Ok(books);
+            if (books.Count == 0)
+            { return NotFound("No ItemsFound"); }
+            else
+            { return Ok(books); }
         }
 
         [AllowAnonymous]
@@ -69,7 +68,21 @@ namespace Digibooky.API.Controllers.Books
         public ActionResult<List<BookDetailsDTO>> SearchByISBN([FromRoute]string ISBN)
         {
             var books = _bookService.FindAllBooks_SearchByISBN(ISBN);
-            return Ok(books);
+            if (books.Count == 0)
+            { return NotFound("No ItemsFound"); }
+            else
+            { return Ok(books); }
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("[action]/{author}")]
+        public ActionResult<List<BookDetailsDTO>> SearchByAuthor([FromRoute]string author)
+        {
+            var books = _bookService.FindAllBooks_SearchByAuthor(author);
+            if (books.Count == 0)
+            { return NotFound("No ItemsFound"); }
+            else
+            { return Ok(books); }
         }
 
         [Authorize(Policy = "MustBeAdmin")]
@@ -97,11 +110,22 @@ namespace Digibooky.API.Controllers.Books
         [Route("[action]/{ISBN}")]
         public ActionResult<Book> UpdateInformation([FromRoute]string ISBN, [FromBody] BookDTOUpdate bookDTOUpdate)
         {
-            var title = bookDTOUpdate.Title;
-            var authorFirstName = bookDTOUpdate.AuthorFirstName;
-            var authorLastName = bookDTOUpdate.AuthorLastName;
-            _bookService.UpdateInformation(ISBN, title, authorFirstName, authorLastName);
-            return Ok();
+            try
+            {
+                var title = bookDTOUpdate.Title;
+                var authorFirstName = bookDTOUpdate.AuthorFirstName;
+                var authorLastName = bookDTOUpdate.AuthorLastName;
+                _bookService.UpdateInformation(ISBN, title, authorFirstName, authorLastName);
+                return Ok();
+            }
+            catch (BookException bookEx)
+            {
+                return BadRequest(bookEx.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
