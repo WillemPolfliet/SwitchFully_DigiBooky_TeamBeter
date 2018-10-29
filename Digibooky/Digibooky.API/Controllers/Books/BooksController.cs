@@ -1,15 +1,11 @@
 ﻿using Digibooky.API.Controllers.Books.Interfaces;
 using Digibooky.Domain.Books;
 using Digibooky.Domain.Books.Exceptions;
-using Digibooky.Services.BookServices;
 using Digibooky.Services.BookServices.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Digibooky.API.Controllers.Books
 {
@@ -92,16 +88,27 @@ namespace Digibooky.API.Controllers.Books
             }
         }
 
-        [Authorize(Roles = "librarian")]
+        [AllowAnonymous]
         [HttpPut]
         [Route("[action]/{ISBN}")]
         public ActionResult<Book> UpdateInformation([FromRoute]string ISBN, [FromBody] BookDTOUpdate bookDTOUpdate)
         {
-            var title = bookDTOUpdate.Title;
-            var authorFirstName = bookDTOUpdate.AuthorFirstName;
-            var authorLastName = bookDTOUpdate.AuthorLastName;
-            _bookService.UpdateInformation(ISBN, title, authorFirstName, authorLastName);
-            return Ok();
+            try
+            {
+                var title = bookDTOUpdate.Title;
+                var authorFirstName = bookDTOUpdate.AuthorFirstName;
+                var authorLastName = bookDTOUpdate.AuthorLastName;
+                _bookService.UpdateInformation(ISBN, title, authorFirstName, authorLastName);
+                return Ok();
+            }
+            catch(BookException bookEx)
+            {
+                return BadRequest(bookEx.Message);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

@@ -118,5 +118,21 @@ namespace Digibooky.Services.Tests.BookServices
             Assert.Equal(4, result.Count);
         }
 
+        [Fact]
+        public void GivenAListOfBooks_WhenUpdateTitleOnBook_BookTitleIsUpdated()
+        {
+            bookService.UpdateInformation("9789024555147", "Title has changed", null, null);
+
+            Assert.Equal("Title has changed", BooksDatabase.booksDb[0].Title);
+        }
+
+        [Fact]
+        public void GivenAListOfBooks_WhenUpdateTitleOnNonExistingBook_ExceptionIsThrown()
+        {
+            var exception = Assert.Throws<BookException>(() => bookService.UpdateInformation("123", "Title has changed", "Gwen", "Jamroziak"));
+            Assert.Equal("This book does not exist in our database", exception.Message);
+        }
+
+
     }
 }
