@@ -1,15 +1,11 @@
 ﻿using Digibooky.API.Controllers.Books.Interfaces;
 using Digibooky.Domain.Books;
 using Digibooky.Domain.Books.Exceptions;
-using Digibooky.Services.BookServices;
 using Digibooky.Services.BookServices.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Digibooky.API.Controllers.Books
 {
@@ -35,7 +31,6 @@ namespace Digibooky.API.Controllers.Books
         }
 
         [AllowAnonymous]
-
         [HttpGet]
         [Route("{ISBN}")]
         public ActionResult<BookDetailsDTO> ShowDetailsOfSingleBook(string ISBN)
@@ -56,14 +51,25 @@ namespace Digibooky.API.Controllers.Books
             }
         }
 
-        //[HttpPost]
-        //public ActionResult<Book> Register([FromBody] BookDTO bookDTO)
-        //{
-        //    //try
-        //    //{
-        //    //    Book book = _bookMapper.BookDTOToBook(bookDTO);
-        //    //    _bookService.Register(book);
-        //    //}
-        //}
+        [Authorize(Roles = "admin, librarian")]
+        [HttpPost]
+        public ActionResult<Book> Register([FromBody] BookDTORegister bookDTORegister)
+        {
+            try
+            {
+                Book book = _bookMapper.BookDTORegisterToBook(bookDTORegister);
+                _bookService.Register(book);
+                return Ok();
+            }
+            catch(BookException bookEx)
+            {
+                return BadRequest(bookEx.Message);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

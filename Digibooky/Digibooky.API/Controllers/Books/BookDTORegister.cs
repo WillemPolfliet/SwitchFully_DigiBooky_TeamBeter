@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace Digibooky.API.Controllers.Books
 {
-    public class BookDetailsDTO
+    public class BookDTORegister
     {
         public string Isbn { get; set; }
         public string Title { get; set; }
-        public string FirstNameAuthor { get; set; }
-        public string LastNameAuthor { get; set; }
+        public string AuthorFirstName { get; set; }
+        public string AuthorLastName { get; set; }
     }
 }
