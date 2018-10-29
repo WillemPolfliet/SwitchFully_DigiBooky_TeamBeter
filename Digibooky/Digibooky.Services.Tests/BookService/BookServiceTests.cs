@@ -11,8 +11,9 @@ namespace Digibooky.Services.Tests.BookServices
 {
 	public class BookServiceTests
 	{
-		
-		public static void Initialize()
+        IBookService bookService;
+
+		public BookServiceTests()
 		{
 			BooksDatabase.booksDb.Clear();
 
@@ -25,18 +26,15 @@ namespace Digibooky.Services.Tests.BookServices
 				};
 
 			BooksDatabase.booksDb.AddRange(temp);
+
+            this.bookService = new BookService();
 		}
 
 		[Fact]
 		public void GivenAListOfBooks_WhenGetAllBooks_AllBooksAreReturned()
 		{
-			Initialize();
 
-			IBookService bookservice = new BookService();
-
-
-			var actual = bookservice.GetAllBooks();
-
+			var actual = bookService.GetAllBooks();
 
 			Assert.Equal(BooksDatabase.booksDb.Count, actual.Count);
 		}
@@ -44,10 +42,6 @@ namespace Digibooky.Services.Tests.BookServices
 		[Fact]
 		public void GivenBookDatabase_WhenGetBookByISBNWithCorrectISBN_ThenReturnBook()
 		{
-			Initialize();
-
-			BookService bookService = new BookService();
-
 			var actual = bookService.GetBookByISBN("9789024555147");
 
 			Assert.Equal(BooksDatabase.booksDb[0], actual);
@@ -56,13 +50,21 @@ namespace Digibooky.Services.Tests.BookServices
 		[Fact]
 		public void GivenBookDatabase_WhenGetBookByISBNWithWrongISBN_ThenThrowException()
 		{
-			Initialize();
-
-			BookService bookService = new BookService();
-
 			var exception = Assert.Throws<BookException>(() => bookService.GetBookByISBN("1234563"));
 
 			Assert.Equal("This ISBN can not be found", exception.Message);
 		}
-	}
+
+        [Fact]
+        public void GivenBookDatabase_WhenRegisterBook_ThenBookAddedToDatabase()
+        {
+            Book bookToRegister = new Book("9789024555147", "Het Franciscus Verbond", new Author(1, "John", "Sack"));
+
+            bookService.Register(bookToRegister);
+
+            var actual = BooksDatabase.booksDb.Count;
+
+            Assert.Equal(5, actual);
+        }
+    }
 }

@@ -24,5 +24,10 @@ namespace Digibooky.Services.BookServices
             else
             { return selectedBook; }
         }
+
+        public void Register(Book bookToRegister)
+        {
+            BooksDatabase.booksDb.Add(bookToRegister);
+        }
     }
 }
