@@ -91,5 +91,16 @@ namespace Digibooky.API.Controllers.Books
                 return BadRequest(ex.Message);
             }
         }
+
+        [Authorize(Roles = "librarian")]
+        [HttpPut]
+        [Route("[action]/{ISBN}")]
+        public ActionResult<Book> UpdateInformation([FromRoute]string ISBN, [FromBody] BookDTOUpdate bookDTOUpdate)
+        {
+            var title = bookDTOUpdate.Title;
+            var authorFirstName = bookDTOUpdate.AuthorFirstName;
+            var authorLastName = bookDTOUpdate.AuthorLastName;
+            _bookService.UpdateInformation(ISBN, title, authorFirstName, authorLastName);
+        }
     }
 }
