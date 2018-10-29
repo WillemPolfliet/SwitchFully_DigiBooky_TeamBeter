@@ -10,5 +10,7 @@ namespace Digibooky.Services.BookServices.Interfaces
         List<Book> GetAllBooks();
         Book GetBookByISBN(string givenISBN);
         void Register(Book bookToRegister);
+        List<Book> FindAllBooks_SearchByTitle(string givenMatchingString);
+        List<Book> FindAllBooks_SearchByISBN(string givenMatchingString);
     }
 }

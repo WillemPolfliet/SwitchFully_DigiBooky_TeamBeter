@@ -35,7 +35,6 @@ namespace Digibooky.API.Controllers.Books
         }
 
         [AllowAnonymous]
-
         [HttpGet]
         [Route("{ISBN}")]
         public ActionResult<BookDetailsDTO> ShowDetailsOfSingleBook(string ISBN)
@@ -44,7 +43,6 @@ namespace Digibooky.API.Controllers.Books
             {
                 var selectedBook = _bookService.GetBookByISBN(ISBN);
                 return Ok(_bookMapper.BookToDetailsDTO(selectedBook));
-
             }
             catch (BookException bookEx)
             {
@@ -54,7 +52,24 @@ namespace Digibooky.API.Controllers.Books
             {
                 return BadRequest(ex.Message);
             }
+        }
 
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("[action]/{title}")]
+        public ActionResult<List<BookDetailsDTO>> SearchByTitle([FromRoute]string title)
+        {
+            var books = _bookService.FindAllBooks_SearchByTitle(title);
+            return Ok(books);
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("[action]/{ISBN}")]
+        public ActionResult<List<BookDetailsDTO>> SearchByISBN([FromRoute]string ISBN)
+        {
+            var books = _bookService.FindAllBooks_SearchByISBN(ISBN);
+            return Ok(books);
         }
     }
 }
