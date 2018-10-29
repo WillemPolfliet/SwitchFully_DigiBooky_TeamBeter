@@ -71,5 +71,25 @@ namespace Digibooky.API.Controllers.Books
             var books = _bookService.FindAllBooks_SearchByISBN(ISBN);
             return Ok(books);
         }
+
+        [Authorize(Roles = "admin, librarian")]
+        [HttpPost]
+        public ActionResult<Book> Register([FromBody] BookDTORegister bookDTORegister)
+        {
+            try
+            {
+                Book book = _bookMapper.BookDTORegisterToBook(bookDTORegister);
+                _bookService.Register(book);
+                return Ok();
+            }
+            catch (BookException bookEx)
+            {
+                return BadRequest(bookEx.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

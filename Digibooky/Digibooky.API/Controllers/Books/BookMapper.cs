@@ -41,9 +41,9 @@ namespace Digibooky.API.Controllers.Books
             };
         }
 
-        public Book BookDTOToBook(BookDTO bookDTO)
+        public Book BookDTORegisterToBook(BookDTORegister bookDTORegister)
         {
-            throw new NotImplementedException();
+            return new Book(bookDTORegister.Isbn, bookDTORegister.Title, bookDTORegister.AuthorFirstName, bookDTORegister.AuthorLastName);
         }
     }
 }

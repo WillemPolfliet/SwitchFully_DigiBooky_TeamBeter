@@ -32,6 +32,13 @@ namespace Digibooky.Domain.Books
             {
                 throw new BookException("The title is required");
             }
+
+
+            if (string.IsNullOrWhiteSpace(authorLastName))
+            {
+                throw new BookException("The authorLastName is required");
+            }
+
             Title = title;
             AuthorFirstName = authorFirstName;
             AuthorLastName = authorLastName;

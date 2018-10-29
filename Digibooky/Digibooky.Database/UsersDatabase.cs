@@ -16,7 +16,20 @@ namespace Digibooky.Databases
                 .WithStreetNumber("5A")
                 .WithPostalCode(2800)
                 .WithCity("Mechelen")
-                .Build() };
+                .Build(),
+
+            UserBuilder.CreateUser()
+                .WithINSS(1234567891234)
+                .WithFirstName("Firstname")
+                .WithLastName("Lastname")
+                .WithEmail("user1@user.com")
+                .WithPassword("Password123")
+                .WithStreet("Street")
+                .WithStreetNumber("5A")
+                .WithPostalCode(2800)
+                .WithCity("Mechelen")
+                .Build(),
     };
+    }
 }
 

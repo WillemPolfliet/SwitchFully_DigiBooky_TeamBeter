@@ -37,5 +37,22 @@ namespace Digibooky.Domain.Tests.BookTests
 
             Assert.Equal("The title is required", exception.Message);
         }
+
+
+        [Fact]
+        public void GivenBookParameters_WhenCreateBookWithEmptyAuthorLastName_ThenThrowBookException()
+        {
+            var exception = Assert.Throws<BookException>(() => new Book("1234567890123", "Title", "John", ""));
+
+            Assert.Equal("The authorLastName is required", exception.Message);
+        }
+
+        [Fact]
+        public void GivenBookParameters_WhenCreateBookWithWhitespaceAuthorLastName_ThenThrowBookException()
+        {
+            var exception = Assert.Throws<BookException>(() => new Book("1234567890123", "Title", "John", " "));
+
+            Assert.Equal("The authorLastName is required", exception.Message);
+        }
     }
 }
