@@ -62,5 +62,33 @@ namespace Digibooky.Services.BookServices
             }
             return listToReturn;
         }
+
+        public void UpdateInformation(string iSBN, string title, string authorFirstName, string authorLastName)
+        {
+            var doesBookExist = BooksDatabase.booksDb.Any(dbBook => dbBook.Isbn == iSBN);
+
+            if (doesBookExist)
+            {
+                if (!string.IsNullOrWhiteSpace(title))
+                {
+                    BooksDatabase.booksDb.First(dbBook => dbBook.Isbn == iSBN)
+                         .Title = title;
+                }
+                if(!string.IsNullOrWhiteSpace(authorFirstName))
+                {
+                    BooksDatabase.booksDb.First(dbBook => dbBook.Isbn == iSBN)
+                         .AuthorFirstName = authorFirstName;
+                }
+                if (!string.IsNullOrWhiteSpace(authorLastName))
+                {
+                    BooksDatabase.booksDb.First(dbBook => dbBook.Isbn == iSBN)
+                         .AuthorLastName = authorLastName;
+                }
+            }
+            else
+            {
+                throw new BookException("This book does not exist in our database");
+            }
+        }
     }
 }

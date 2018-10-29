@@ -101,6 +101,7 @@ namespace Digibooky.API.Controllers.Books
             var authorFirstName = bookDTOUpdate.AuthorFirstName;
             var authorLastName = bookDTOUpdate.AuthorLastName;
             _bookService.UpdateInformation(ISBN, title, authorFirstName, authorLastName);
+            return Ok();
         }
     }
 }
