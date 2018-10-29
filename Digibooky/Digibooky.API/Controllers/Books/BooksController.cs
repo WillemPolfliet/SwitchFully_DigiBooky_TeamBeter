@@ -56,7 +56,10 @@ namespace Digibooky.API.Controllers.Books
         public ActionResult<List<BookDetailsDTO>> SearchByTitle([FromRoute]string title)
         {
             var books = _bookService.FindAllBooks_SearchByTitle(title);
-            return Ok(books);
+            if (books.Count == 0)
+            { return NotFound("No ItemsFound"); }
+            else
+            { return Ok(books); }
         }
 
         [AllowAnonymous]
@@ -65,7 +68,21 @@ namespace Digibooky.API.Controllers.Books
         public ActionResult<List<BookDetailsDTO>> SearchByISBN([FromRoute]string ISBN)
         {
             var books = _bookService.FindAllBooks_SearchByISBN(ISBN);
-            return Ok(books);
+            if (books.Count == 0)
+            { return NotFound("No ItemsFound"); }
+            else
+            { return Ok(books); }
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("[action]/{author}")]
+        public ActionResult<List<BookDetailsDTO>> SearchByAuthor([FromRoute]string author)
+        {
+            var books = _bookService.FindAllBooks_SearchByAuthor(author);
+            if (books.Count == 0)
+            { return NotFound("No ItemsFound"); }
+            else
+            { return Ok(books); }
         }
 
         [Authorize(Roles = "admin, librarian")]
@@ -101,11 +118,11 @@ namespace Digibooky.API.Controllers.Books
                 _bookService.UpdateInformation(ISBN, title, authorFirstName, authorLastName);
                 return Ok();
             }
-            catch(BookException bookEx)
+            catch (BookException bookEx)
             {
                 return BadRequest(bookEx.Message);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
