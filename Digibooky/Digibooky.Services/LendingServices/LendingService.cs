@@ -38,7 +38,7 @@ namespace Digibooky.Services.LendingServices
 
         private bool DoesBookISBNExist(string isbn)
         {
-            return BooksDatabase.booksDb.Any(book => book.Isbn == isbn);
+            return BooksDatabase.booksDb.Any(book => book.ISBN == isbn && book.IsDeleted == false);
         }
 
         private bool DoesUserINSSExist(long inss)
