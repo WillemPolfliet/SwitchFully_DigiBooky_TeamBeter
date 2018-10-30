@@ -127,5 +127,25 @@ namespace Digibooky.API.Controllers.Books
                 return BadRequest(ex.Message);
             }
         }
+
+        [Authorize(Policy = "MustBeAdmin")]
+        [HttpDelete]
+        [Route("[action]/{ISBN}")]
+        public ActionResult<Book> Delete([FromRoute]string ISBN)
+        {
+            _bookService.Delete(ISBN);
+            return Ok();
+        }
+
+        [Authorize(Policy = "MustBeAdmin")]
+        [HttpPut]
+        [Route("[action]/{ISBN}")]
+        public ActionResult<Book> Restore([FromRoute]string ISBN)
+        {
+            _bookService.Restore(ISBN);
+            return Ok();
+        }
+
+
     }
 }

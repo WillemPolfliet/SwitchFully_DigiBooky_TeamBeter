@@ -29,10 +29,10 @@ namespace Digibooky.Services.Tests.BookServices
             this.bookService = new BookService();
         }
 
+
         [Fact]
         public void GivenAListOfBooks_WhenGetAllBooks_AllBooksAreReturned()
         {
-
             var actual = bookService.GetAllBooks();
 
             Assert.Equal(BooksDatabase.booksDb.Count, actual.Count);
@@ -110,6 +110,7 @@ namespace Digibooky.Services.Tests.BookServices
             Assert.Equal(3, result.Count);
 
         }
+
         [Fact]
         public void GivenAListOfBooks_WhenSearchingOnAuthorLastName_ListOfBooksIsReturned()
         {
@@ -133,6 +134,44 @@ namespace Digibooky.Services.Tests.BookServices
             Assert.Equal("This book does not exist in our database", exception.Message);
         }
 
+        [Fact]
+        public void GivenAListOfBooks_WhenDeleteBook_ThenGetAllGetsOnlyThreeBooksButListStillHasFourBooks()
+        {
+            bookService.Delete("9789024555147");
 
+            Assert.Equal(4, BooksDatabase.booksDb.Count);
+            Assert.Equal(3, bookService.GetAllBooks().Count);
+        }
+
+        [Fact]
+        public void GivenAListOfBooks_WhenDeleteBook_ThenSearchByAuthorAGetsOnlyThreeBooksButListStillHasFourBooks()
+        {
+            bookService.Delete("9789024555147");
+
+            List<Book> result = bookService.FindAllBooks_SearchByAuthor("A");
+
+            Assert.Equal(3, result.Count);
+            Assert.Equal(4, BooksDatabase.booksDb.Count);
+        }
+
+        [Fact]
+        public void GivenAListOfBooks_WhenDeleteBook_ThenSearchByISBNThrowsException()
+        {
+            bookService.Delete("9789024555147");
+
+            var exception = Assert.Throws<BookException>(() => bookService.GetBookByISBN("9789024555147"));
+
+            Assert.Equal("This ISBN can not be found", exception.Message);
+        }
+
+        [Fact]
+        public void GivenAListOfBooks_WhenDeleteBookAndUpdateThatBook_ThenBookIsUpdated()
+        {
+            bookService.Delete("9789024555147");
+
+            bookService.UpdateInformation("9789024555147", "Title has changed", null, null);
+
+            Assert.Equal("Title has changed", BooksDatabase.booksDb[0].Title);
+        }
     }
 }
