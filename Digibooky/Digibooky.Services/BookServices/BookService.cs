@@ -1,12 +1,13 @@
 ﻿using Digibooky.Databases;
 using Digibooky.Domain.Books;
 using Digibooky.Domain.Books.Exceptions;
+using Digibooky.Domain.Users;
 using Digibooky.Services.BookServices.Interfaces;
+using Digibooky.Services.LendingServices;
+using Digibooky.Services.LendingServices.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Digibooky.Services.BookServices
 {
@@ -17,13 +18,20 @@ namespace Digibooky.Services.BookServices
             return BooksDatabase.booksDb.Where(book => book.IsDeleted == false).ToList();
         }
 
-        public Book GetBookByISBN(string givenISBN)
+        public Dictionary<Book, string> GetBookByISBN(string givenISBN)
         {
+            Dictionary<Book, string> toReturn = new Dictionary<Book, string>();
+            ILendingService lendingService = new LendingService();
             var selectedBook = BooksDatabase.booksDb.FirstOrDefault(book => book.ISBN == givenISBN && book.IsDeleted == false);
+            var lender = lendingService.GetLender(givenISBN);
+
             if (selectedBook == null)
             { throw new BookException("This ISBN can not be found"); }
             else
-            { return selectedBook; }
+            {
+                toReturn.Add(selectedBook, lender);
+                return toReturn;
+            }
         }
 
         public void Register(Book bookToRegister)
@@ -71,7 +79,7 @@ namespace Digibooky.Services.BookServices
                     BooksDatabase.booksDb.First(dbBook => dbBook.ISBN == iSBN)
                          .Title = title;
                 }
-                if(!string.IsNullOrWhiteSpace(authorFirstName))
+                if (!string.IsNullOrWhiteSpace(authorFirstName))
                 {
                     BooksDatabase.booksDb.First(dbBook => dbBook.ISBN == iSBN)
                          .AuthorFirstName = authorFirstName;

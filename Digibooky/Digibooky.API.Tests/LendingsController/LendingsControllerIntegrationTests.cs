@@ -29,7 +29,7 @@ namespace Digibooky.API.Tests.LendingsController
 
 
 			UsersDatabase.users.Clear();
-			var temp = new List<User>()
+			var temp = new List<@string>()
 			{
 				UserBuilder.CreateUser()
 				.WithINSS(1234567891235)
@@ -37,7 +37,7 @@ namespace Digibooky.API.Tests.LendingsController
 				.WithLastName("Lastname")
 				.WithEmail("user01@user.com")
 				.WithPassword("Password123")
-				.WithRole(User.Roles.admin)
+				.WithRole(@string.Roles.admin)
 				.WithStreet("Street")
 				.WithStreetNumber("5A")
 				.WithPostalCode(2800)

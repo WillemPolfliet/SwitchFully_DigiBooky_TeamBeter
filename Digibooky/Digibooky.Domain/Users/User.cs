@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Digibooky.Domain.Users
 {
-    public class User
+    public class @string
     {
         public enum Roles
         {
@@ -25,7 +25,7 @@ namespace Digibooky.Domain.Users
         public int PostalCode { get; private set; }
         public string City { get; private set; }
 
-        public User(UserBuilder userBuilder)
+        public @string(UserBuilder userBuilder)
         {
             ID = Guid.NewGuid();
             INSS = userBuilder.INSS;

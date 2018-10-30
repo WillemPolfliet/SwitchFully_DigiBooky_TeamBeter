@@ -51,7 +51,7 @@ namespace Digibooky.Services.Tests.UserServices
 
             var actual = _userService.GetAllUsers();
 
-            Assert.IsType<List<User>>(actual);
+            Assert.IsType<List<@string>>(actual);
         }
 
         [Fact]
@@ -111,10 +111,10 @@ namespace Digibooky.Services.Tests.UserServices
         {
             //IUserService userService = new UserService();
             var user = UsersDatabase.users[0];
-            _userService.UpdateInformation(User.Roles.librarian, user.INSS);
+            _userService.UpdateInformation(@string.Roles.librarian, user.INSS);
 
             var rolesActual = UsersDatabase.users.FirstOrDefault(usr => usr.ID == user.ID).UserRoles;
-            var rolesExpected = User.Roles.librarian;
+            var rolesExpected = @string.Roles.librarian;
 
             Assert.Equal(rolesExpected, rolesActual);
         }

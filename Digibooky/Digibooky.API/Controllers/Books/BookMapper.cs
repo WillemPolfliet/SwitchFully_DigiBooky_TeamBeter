@@ -1,6 +1,5 @@
 ﻿using Digibooky.API.Controllers.Books.Interfaces;
 using Digibooky.Domain.Books;
-using System;
 using System.Collections.Generic;
 
 namespace Digibooky.API.Controllers.Books
@@ -30,15 +29,27 @@ namespace Digibooky.API.Controllers.Books
             };
         }
 
-        public BookDetailsDTO BookToDetailsDTO(Book givenBook)
+        public BookDTODetails BookToDetailsDTO(Dictionary<Book, string> givenBook)
         {
-            return new BookDetailsDTO
+            BookDTODetails bookDTODetails = new BookDTODetails();
+            foreach (var book in givenBook)
             {
-                Isbn = givenBook.ISBN,
-                Title = givenBook.Title,
-                FirstNameAuthor = givenBook.AuthorFirstName,
-                LastNameAuthor = givenBook.AuthorLastName
-            };
+                var bookIsLent = false;
+                string lender = null;
+                if (book.Value != null)
+                {
+                    bookIsLent = true;
+                    lender = book.Value;
+                }
+
+                bookDTODetails.Isbn = book.Key.ISBN;
+                bookDTODetails.Title = book.Key.Title;
+                bookDTODetails.FirstNameAuthor = book.Key.AuthorFirstName;
+                bookDTODetails.LastNameAuthor = book.Key.AuthorLastName;
+                bookDTODetails.BookIsLent = bookIsLent;
+                bookDTODetails.Lender = lender;
+            }
+            return bookDTODetails;
         }
 
         public Book BookDTORegisterToBook(BookDTORegister bookDTORegister)

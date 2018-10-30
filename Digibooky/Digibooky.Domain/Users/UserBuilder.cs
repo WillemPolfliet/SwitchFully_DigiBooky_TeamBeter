@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
-using static Digibooky.Domain.Users.User;
+using static Digibooky.Domain.Users.@string;
 
 namespace Digibooky.Domain.Users
 {
@@ -143,9 +143,9 @@ namespace Digibooky.Domain.Users
             return this;
         }
 
-        public User Build()
+        public @string Build()
         {
-            return new User(this);
+            return new @string(this);
         }
 
 

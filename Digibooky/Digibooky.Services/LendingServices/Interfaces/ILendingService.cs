@@ -1,7 +1,6 @@
 ﻿using Digibooky.Domain.Lendings;
-using System;
+using Digibooky.Domain.Users;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Digibooky.Services.LendingServices.Interfaces
 {
@@ -10,5 +9,6 @@ namespace Digibooky.Services.LendingServices.Interfaces
         void LendBook(long inss, string isbn);
         List<Lending> GetAll();
         void ReturnBook(string guid);
+        string GetLender(string givenISBN);
     }
 }

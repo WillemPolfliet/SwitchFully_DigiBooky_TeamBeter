@@ -1,11 +1,11 @@
 ﻿using Digibooky.Databases;
 using Digibooky.Domain.Lendings;
 using Digibooky.Domain.Lendings.Exceptions;
+using Digibooky.Domain.Users;
 using Digibooky.Services.LendingServices.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Digibooky.Services.LendingServices
 {
@@ -65,6 +65,19 @@ namespace Digibooky.Services.LendingServices
 
             if (BookToReturn.DateReturned > BookToReturn.ReturnDate)
             { throw new LentOutException("Lend is overdue"); }
+
+        }
+
+        public string GetLender(string givenISBN)
+        {
+            if (BookIsAlreadyLent(givenISBN))
+            {
+                var BookFromLendingDatabase = LendingsDatabase.Lendings.FirstOrDefault(LendBook => LendBook.Isbn == givenISBN);
+                var userInss = BookFromLendingDatabase.INSS;
+                var user = UsersDatabase.users.FirstOrDefault(usr => usr.INSS == userInss);
+                return $"{user.FirstName} {user.LastName}";
+            }
+            else { return null; }
 
         }
     }

@@ -5,13 +5,13 @@ namespace Digibooky.Databases
 {
 	public static class UsersDatabase
 	{
-		public static List<User> users = new List<User>() { UserBuilder.CreateUser()
+		public static List<@string> users = new List<@string>() { UserBuilder.CreateUser()
 				.WithINSS(1234567891234)
 				.WithFirstName("Firstname")
 				.WithLastName("Lastname")
 				.WithEmail("user@user.com")
 				.WithPassword("Password123")
-				.WithRole(User.Roles.admin)
+				.WithRole(@string.Roles.admin)
 				.WithStreet("Street")
 				.WithStreetNumber("5A")
 				.WithPostalCode(2800)
@@ -24,7 +24,7 @@ namespace Digibooky.Databases
 				.WithLastName("Lastname")
 				.WithEmail("user1@user.com")
 				.WithPassword("Password123")
-			.WithRole(User.Roles.member)
+			.WithRole(@string.Roles.member)
 				.WithStreet("Street")
 				.WithStreetNumber("5A")
 				.WithPostalCode(2800)

@@ -8,9 +8,9 @@ namespace Digibooky.Services.UserServices.Interfaces
 {
     public interface IUserService
     {
-        void Register(User user);
-        List<User> GetAllUsers();
-        void UpdateInformation(User.Roles newRole, long userINSS);
-        Task<User> Authenticate(string username, string password);
+        void Register(@string user);
+        List<@string> GetAllUsers();
+        void UpdateInformation(@string.Roles newRole, long userINSS);
+        Task<@string> Authenticate(string username, string password);
     }
 }

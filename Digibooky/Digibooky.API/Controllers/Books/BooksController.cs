@@ -33,7 +33,7 @@ namespace Digibooky.API.Controllers.Books
         [AllowAnonymous]
         [HttpGet]
         [Route("{ISBN}")]
-        public ActionResult<BookDetailsDTO> ShowDetailsOfSingleBook(string ISBN)
+        public ActionResult<BookDTODetails> ShowDetailsOfSingleBook(string ISBN)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace Digibooky.API.Controllers.Books
         [AllowAnonymous]
         [HttpGet]
         [Route("[action]/{title}")]
-        public ActionResult<List<BookDetailsDTO>> SearchByTitle([FromRoute]string title)
+        public ActionResult<List<BookDTODetails>> SearchByTitle([FromRoute]string title)
         {
             var books = _bookService.FindAllBooks_SearchByTitle(title);
             if (books.Count == 0)
@@ -65,7 +65,7 @@ namespace Digibooky.API.Controllers.Books
         [AllowAnonymous]
         [HttpGet]
         [Route("[action]/{ISBN}")]
-        public ActionResult<List<BookDetailsDTO>> SearchByISBN([FromRoute]string ISBN)
+        public ActionResult<List<BookDTODetails>> SearchByISBN([FromRoute]string ISBN)
         {
             var books = _bookService.FindAllBooks_SearchByISBN(ISBN);
             if (books.Count == 0)
@@ -76,7 +76,7 @@ namespace Digibooky.API.Controllers.Books
         [AllowAnonymous]
         [HttpGet]
         [Route("[action]/{author}")]
-        public ActionResult<List<BookDetailsDTO>> SearchByAuthor([FromRoute]string author)
+        public ActionResult<List<BookDTODetails>> SearchByAuthor([FromRoute]string author)
         {
             var books = _bookService.FindAllBooks_SearchByAuthor(author);
             if (books.Count == 0)
