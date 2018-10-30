@@ -19,12 +19,12 @@ namespace Digibooky.Databases
 				.Build(),
 
 			UserBuilder.CreateUser()
-				.WithINSS(1234567891234)
+				.WithINSS(1234567891235)
 				.WithFirstName("Firstname")
 				.WithLastName("Lastname")
 				.WithEmail("user1@user.com")
 				.WithPassword("Password123")
-			.WithRole(User.Roles.member)
+			.WithRole(User.Roles.librarian)
 				.WithStreet("Street")
 				.WithStreetNumber("5A")
 				.WithPostalCode(2800)

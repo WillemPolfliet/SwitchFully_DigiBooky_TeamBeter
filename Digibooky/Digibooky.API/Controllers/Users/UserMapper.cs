@@ -43,7 +43,6 @@ namespace Digibooky.API.Controllers.Users
         {
 			return new UserDTO
 			{
-				INSS = user.INSS,
 				FirstName = user.FirstName,
 				LastName = user.LastName,
 				Email = user.Email,

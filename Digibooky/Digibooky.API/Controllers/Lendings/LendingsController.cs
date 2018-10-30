@@ -39,21 +39,6 @@ namespace Digibooky.API.Controllers.Lendings
             return allLendingDTOs;
         }
 
-		[Authorize(Policy = "MustBeLibrarian")]
-		[HttpGet]
-		[Route("All_Overdue")]
-		public List<LendingDTO> GetAllOverdueLendings()
-		{
-			throw new NotImplementedException();
-		}
-
-		// GET api/<controller>/5
-		[HttpGet("{id}")]
-        public string Get(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         // POST api/<controller>
 		[Authorize(Policy = "MustBeMember")]
 		[HttpPost]

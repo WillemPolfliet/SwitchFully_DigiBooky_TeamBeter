@@ -58,14 +58,15 @@ namespace Digibooky.Services.UserServices
             UsersDatabase.users.Add(user);
         }
 
-        public void UpdateInformation(User.Roles userRole, long userINSS)
+        public void UpdateInformation(string userRole, long userINSS)
         {
             var doesUserExist = UsersDatabase.users.Any(dbUser => dbUser.INSS == userINSS);
 
+            var UserRole = (User.Roles)Enum.Parse(typeof(User.Roles), userRole);
             if (doesUserExist)
             {
 				UsersDatabase.users.First(dbUser => dbUser.INSS == userINSS)
-					.SetRole(userRole);
+					.SetRole(UserRole);
             }
             else
             {

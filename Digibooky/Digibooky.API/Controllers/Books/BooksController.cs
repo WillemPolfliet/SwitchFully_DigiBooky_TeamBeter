@@ -57,9 +57,9 @@ namespace Digibooky.API.Controllers.Books
         {
             var books = _bookService.FindAllBooks_SearchByTitle(title);
             if (books.Count == 0)
-            { return NotFound("No ItemsFound"); }
+            { return NotFound("No items found"); }
             else
-            { return Ok(books); }
+            { return Ok(_bookMapper.ListofBookToDTOList(books)); }
         }
 
         [AllowAnonymous]
@@ -69,9 +69,9 @@ namespace Digibooky.API.Controllers.Books
         {
             var books = _bookService.FindAllBooks_SearchByISBN(ISBN);
             if (books.Count == 0)
-            { return NotFound("No ItemsFound"); }
+            { return NotFound("No items found"); }
             else
-            { return Ok(books); }
+            { return Ok(_bookMapper.ListofBookToDTOList(books)); }
         }
         [AllowAnonymous]
         [HttpGet]
@@ -80,9 +80,9 @@ namespace Digibooky.API.Controllers.Books
         {
             var books = _bookService.FindAllBooks_SearchByAuthor(author);
             if (books.Count == 0)
-            { return NotFound("No ItemsFound"); }
+            { return NotFound("No items found"); }
             else
-            { return Ok(books); }
+            { return Ok(_bookMapper.ListofBookToDTOList(books)); }
         }
 
         [Authorize(Policy = "MustBeAdmin")]
@@ -146,7 +146,7 @@ namespace Digibooky.API.Controllers.Books
             return Ok();
         }
 
-        [Authorize(Roles = "librarian")]
+        [Authorize(Policy = "MustBeLibrarian")]
         [HttpGet]
         [Route("Overdue")]
         public ActionResult<List<OverdueBookDTO>> GetAllOverdueBooks()

@@ -61,7 +61,7 @@ namespace Digibooky.API.Controllers.Users
         [Authorize(Policy = "MustBeAdmin")]
         [HttpPut]
         [Route("{INSS}")]
-        public ActionResult<User> UpdateUserDetails([FromQuery]User.Roles newRole, [FromRoute] long INSS)
+        public ActionResult<User> UpdateUserDetails([FromBody]string newRole, [FromRoute] long INSS)
         {
             try
             {
