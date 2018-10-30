@@ -139,14 +139,14 @@ namespace Digibooky.Services.Tests.BookServices
             Assert.Equal("This book does not exist in our database", exception.Message);
         }
 
-        //[Fact]
-        //public void GivenAListOfBooks_WhenDeleteBook_ThenGetAllGetsOnlyThreeBooksButListStillHasFourBooks()
-        //{
-        //    bookService.Delete("9789024555147");
+        [Fact]
+        public void GivenAListOfBooks_WhenDeleteBook_ThenGetAllGetsOnlyThreeBooksButListStillHasFourBooks()
+        {
+            bookService.Delete("9789024555147");
 
-        //    Assert.Equal(4, BooksDatabase.booksDb.Count);
-        //    Assert.Equal(3, bookService.GetAllBooks().Count);
-        //}
+            Assert.Equal(4, BooksDatabase.booksDb.Count);
+            Assert.Equal(3, bookService.GetAllBooks().Count);
+        }
 
         [Fact]
         public void GivenAListOfBooks_WhenDeleteBook_ThenSearchByAuthorAGetsOnlyThreeBooksButListStillHasFourBooks()
