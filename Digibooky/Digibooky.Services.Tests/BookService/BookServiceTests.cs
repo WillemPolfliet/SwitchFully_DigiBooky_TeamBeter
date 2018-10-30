@@ -4,6 +4,7 @@ using Digibooky.Domain.Books.Exceptions;
 using Digibooky.Services.BookServices;
 using Digibooky.Services.BookServices.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Digibooky.Services.Tests.BookServices
@@ -38,13 +39,17 @@ namespace Digibooky.Services.Tests.BookServices
             Assert.Equal(BooksDatabase.booksDb.Count, actual.Count);
         }
 
-        //[Fact]
-        //public void GivenBookDatabase_WhenGetBookByISBNWithCorrectISBN_ThenReturnBook()
-        //{
-        //    var actual = bookService.GetBookByISBN("9789024555147");
+        [Fact]
+        public void GivenBookDatabase_WhenGetBookByISBNWithCorrectISBN_ThenReturnBook()
+        {
+            var expected = BooksDatabase.booksDb[0];
 
-        //    Assert.Equal(BooksDatabase.booksDb[0], actual[BooksDatabase.booksDb[0]]);
-        //}
+            var actual = bookService.GetBookByISBN("9789024555147")
+                .Single(book => book.Key.ISBN == "9789024555147")
+                .Key;
+
+            Assert.Equal(expected, actual);
+        }
 
         [Fact]
         public void GivenBookDatabase_WhenGetBookByISBNWithWrongISBN_ThenThrowException()
