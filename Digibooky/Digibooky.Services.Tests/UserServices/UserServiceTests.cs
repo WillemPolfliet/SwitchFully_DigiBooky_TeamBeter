@@ -28,7 +28,7 @@ namespace Digibooky.Services.Tests.UserServices
 		public void GivenUserDatabaseAndAUser_WhenRegister_ThenUserIsAddedToDatabase()
 		{
 			var user = UserBuilder.CreateUser()
-				.WithINSS(1234567891235)
+				.WithINSS(1234567891236)
 				.WithFirstName("Firstname")
 				.WithLastName("Lastname")
 				.WithEmail("user01@user.com")
@@ -107,7 +107,7 @@ namespace Digibooky.Services.Tests.UserServices
 		public void GivenUserToRegisterAsLibrarian_RegisteringTheUser_UserHasLibrarianAsRole()
 		{
 			var user = UsersDatabase.users[0];
-			_userService.UpdateInformation(User.Roles.librarian, user.INSS);
+			_userService.UpdateInformation("librarian", user.INSS);
 
 			var rolesActual = UsersDatabase.users.FirstOrDefault(usr => usr.ID == user.ID).UserRoles;
 			var rolesExpected = User.Roles.librarian;
