@@ -1,6 +1,7 @@
 ﻿using Digibooky.Databases;
 using Digibooky.Domain.Books;
 using Digibooky.Domain.Books.Exceptions;
+using Digibooky.Domain.Users;
 using Digibooky.Services.BookServices.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -74,7 +75,7 @@ namespace Digibooky.Services.BookServices
                     BooksDatabase.booksDb.First(dbBook => dbBook.Isbn == iSBN)
                          .Title = title;
                 }
-                if(!string.IsNullOrWhiteSpace(authorFirstName))
+                if (!string.IsNullOrWhiteSpace(authorFirstName))
                 {
                     BooksDatabase.booksDb.First(dbBook => dbBook.Isbn == iSBN)
                          .AuthorFirstName = authorFirstName;
@@ -90,5 +91,23 @@ namespace Digibooky.Services.BookServices
                 throw new BookException("This book does not exist in our database");
             }
         }
+
+        public List<OverdueBook> GetAllOverdueBooks()
+        {
+            List<OverdueBook> overdueBooks = new List<OverdueBook>();
+
+            foreach (var item in LendingsDatabase.Lendings)
+            {
+                if (item.ReturnDate < DateTime.Today && item.DateReturned == null)
+                {
+                    Book book = BooksDatabase.booksDb.FirstOrDefault(bookquery => bookquery.Isbn == item.Isbn);
+                    User user = UsersDatabase.users.FirstOrDefault(userQuery => userQuery.INSS == item.INSS);
+
+                    overdueBooks.Add(new OverdueBook(book.Id, book.Isbn, book.Title, item.ID, item.INSS, item.Date, item.ReturnDate, item.DateReturned, user.Email));
+                 }
+            }
+            return overdueBooks;
+        }
+
     }
 }
