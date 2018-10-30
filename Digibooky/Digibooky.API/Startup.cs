@@ -54,9 +54,9 @@ namespace Digibooky.API
 
 			services.AddAuthorization(options =>
 			{
-				options.AddPolicy("MustBeMember", policy => policy.RequireClaim("member"));
-				options.AddPolicy("MustBeLibrarian", policy => policy.RequireClaim("librarian"));
-				options.AddPolicy("MustBeAdmin", policy => policy.RequireClaim("admin"));
+				options.AddPolicy("MustBeMember", policy => policy.RequireRole("member", "librarian", "admin"));
+				options.AddPolicy("MustBeLibrarian", policy => policy.RequireRole("librarian", "admin"));
+				options.AddPolicy("MustBeAdmin", policy => policy.RequireRole("admin"));
 			});
             services.AddSwagger();
         }

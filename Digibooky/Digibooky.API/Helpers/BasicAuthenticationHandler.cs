@@ -59,10 +59,11 @@ namespace Digibooky.API.Helpers
 
             var claims = new List<Claim> {
                 new Claim(ClaimTypes.NameIdentifier, user.ID.ToString()),
-                new Claim(ClaimTypes.Name, user.Email)
+                new Claim(ClaimTypes.Name, user.Email),
+				new Claim(ClaimTypes.Role, user.UserRoles.ToString())
             };
 
-            claims.AddRange(CreateRoleClaims(user));
+            //claims.AddRange(CreateRoleClaims(user));
 
             var identity = new ClaimsIdentity(claims, Scheme.Name);
             var principal = new ClaimsPrincipal(identity);
@@ -71,10 +72,10 @@ namespace Digibooky.API.Helpers
             return AuthenticateResult.Success(ticket);
         }
 
-        private IEnumerable<Claim> CreateRoleClaims(User user)
-        {
-            return user.UserRoles.Select(userRole => new Claim(ClaimTypes.Role, userRole.ToString()));
-        }
+        //private IEnumerable<Claim> CreateRoleClaims(User user)
+        //{
+        //    return user.UserRoles.Select(userRole => new Claim(ClaimTypes.Role, userRole.ToString()));
+        //}
     }
 }
 

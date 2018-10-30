@@ -51,8 +51,8 @@ namespace Digibooky.Services.UserServices
 
             if (doesUserExist)
             {
-                UsersDatabase.users.First(dbUser => dbUser.INSS == userINSS)
-                    .UserRoles.Add(userRole);
+				UsersDatabase.users.First(dbUser => dbUser.INSS == userINSS)
+					.SetRole(userRole);
             }
             else
             {

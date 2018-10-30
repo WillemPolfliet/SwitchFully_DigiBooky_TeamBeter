@@ -56,7 +56,7 @@ namespace Digibooky.API.Controllers.Lendings
 
         // POST api/<controller>
 		[Authorize(Policy = "MustBeMember")]
-        [HttpPost]
+		[HttpPost]
         public ActionResult Lend([FromBody]LendingDTOLendingPost lendingDTOLendingPost)
         {
             try
@@ -98,19 +98,6 @@ namespace Digibooky.API.Controllers.Lendings
 
             }
 
-        }
-
-
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }
