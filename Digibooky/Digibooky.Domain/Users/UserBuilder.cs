@@ -11,6 +11,7 @@ namespace Digibooky.Domain.Users
     public class UserBuilder 
     {
         private const int REQUIRED_PASSWORD_LENGTH = 8;
+
         public long INSS { get; private set; } //long or string?
         public string FirstName { get; private set; }
         public string LastName { get; private set; }

@@ -12,7 +12,14 @@ namespace Digibooky.Services.Tests.UserServices
 {
     public class UserServiceTests
     {
-        [Fact]
+		private readonly IUserService _userService;
+
+		public UserServiceTests(IUserService userService)
+		{
+			_userService = userService;
+		}
+
+		[Fact]
         public void GivenUserDatabaseAndAUser_WhenRegister_ThenUserIsAddedToDatabase()
         {
             var user = UserBuilder.CreateUser()
@@ -28,9 +35,9 @@ namespace Digibooky.Services.Tests.UserServices
                 .WithCity("Mechelen")
                 .Build();
 
-            IUserService userService = new UserService();
+            //IUserService userService = new UserService();
 
-            userService.Register(user);
+            _userService.Register(user);
 
             var actual = UsersDatabase.users.Any(userSearch => userSearch.INSS == 1234567891234);
 
@@ -40,9 +47,9 @@ namespace Digibooky.Services.Tests.UserServices
         [Fact]
         public void GivenUserDataBase_WhenGetAll_ThenAllUsersAreReturned()
         {
-            IUserService userService = new UserService();
+            //IUserService userService = new UserService();
 
-            var actual = userService.GetAllUsers();
+            var actual = _userService.GetAllUsers();
 
             Assert.IsType<List<User>>(actual);
         }
@@ -63,9 +70,9 @@ namespace Digibooky.Services.Tests.UserServices
                 .WithCity("Mechelen")
                 .Build();
 
-            IUserService userService = new UserService();
+            //IUserService userService = new UserService();
 
-            Action act = () => userService.Register(user);
+            Action act = () => _userService.Register(user);
 
             var exception = Assert.Throws<UserException>(act);
 
@@ -89,9 +96,9 @@ namespace Digibooky.Services.Tests.UserServices
                 .WithCity("Mechelen")
                 .Build();
 
-            IUserService userService = new UserService();
+            //IUserService userService = new UserService();
 
-            Action act = () => userService.Register(user);
+            Action act = () => _userService.Register(user);
 
             var exception = Assert.Throws<UserException>(act);
 
@@ -102,9 +109,9 @@ namespace Digibooky.Services.Tests.UserServices
         [Fact]
         public void GivenUserToRegisterAsLibrarian_RegisteringTheUser_UserHasLibrarianAsRole()
         {
-            IUserService userService = new UserService();
+            //IUserService userService = new UserService();
             var user = UsersDatabase.users[0];
-            userService.UpdateInformation(User.Roles.librarian, user.INSS);
+            _userService.UpdateInformation(User.Roles.librarian, user.INSS);
 
             var rolesActual = UsersDatabase.users.FirstOrDefault(usr => usr.ID == user.ID).UserRoles;
             var rolesExpected = User.Roles.librarian;
@@ -115,9 +122,9 @@ namespace Digibooky.Services.Tests.UserServices
         [Fact]
         public async void WhenUsergiven_AuthenticatingMember_ThenMemberLogsIn()
         {
-            IUserService userService = new UserService();
+            //IUserService userService = new UserService();
 
-            var actual = await userService.Authenticate(UsersDatabase.users[0].Email, UsersDatabase.users[0].Password);
+            var actual = await _userService.Authenticate(UsersDatabase.users[0].Email, UsersDatabase.users[0].Password);
 
             Assert.Equal(actual, UsersDatabase.users[0]);
         }

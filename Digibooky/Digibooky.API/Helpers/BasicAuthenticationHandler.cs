@@ -17,23 +17,28 @@ namespace Digibooky.API.Helpers
     public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
         private readonly IUserService _userService;
+		private readonly ILogger<BasicAuthenticationHandler> _logger;
 
-        public BasicAuthenticationHandler(
+		public BasicAuthenticationHandler(
             IOptionsMonitor<AuthenticationSchemeOptions> options,
             ILoggerFactory logger,
             UrlEncoder encoder,
             ISystemClock clock,
+			ILogger<BasicAuthenticationHandler> nlogger,
             IUserService userService)
             : base(options, logger, encoder, clock)
         {
             _userService = userService;
+			_logger = nlogger;
         }
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             if (!Request.Headers.ContainsKey("Authorization"))
             {
-                return AuthenticateResult.Fail("Missing Authorization Header");
+				_logger.LogError(Guid.NewGuid() + " Missing Authorization Header");
+
+				return AuthenticateResult.Fail(Guid.NewGuid() + " Missing Authorization Header");
             }
 
             User user = null;
@@ -49,12 +54,16 @@ namespace Digibooky.API.Helpers
             }
             catch
             {
-                return AuthenticateResult.Fail("Invalid Authorization Header");
+				_logger.LogError(Guid.NewGuid() + " Invalid Authorization Header");
+
+				return AuthenticateResult.Fail(Guid.NewGuid() + " Invalid Authorization Header");
             }
 
             if (user == null)
             {
-                return AuthenticateResult.Fail("Invalid Username or Password");
+				_logger.LogError(Guid.NewGuid() + " Invalid Username or Password");
+
+				return AuthenticateResult.Fail(Guid.NewGuid() + " Invalid Username or Password");
             }
 
             var claims = new List<Claim> {

@@ -2,6 +2,8 @@
 using Digibooky.Domain.Users;
 using Digibooky.Domain.Users.Exceptions;
 using Digibooky.Services.UserServices.Interfaces;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,13 +12,22 @@ namespace Digibooky.Services.UserServices
 {
     public class UserService : IUserService
     {
-        public async Task<User> Authenticate(string username, string password)
+		private readonly ILogger<UserService> _logger;
+
+		public UserService(ILogger<UserService> logger)
+		{
+			_logger = logger;
+		}
+
+		public async Task<User> Authenticate(string username, string password)
         {
             var user = await Task.Run(() => UsersDatabase.users.SingleOrDefault(userToLogin => userToLogin.Email == username && userToLogin.Password == password));
 
             if (user == null)
             {
-                return null;
+				_logger.LogError(Guid.NewGuid() + $" User not found: (username: {username}");
+
+				return null;
             }
 
             return user;
@@ -34,12 +45,14 @@ namespace Digibooky.Services.UserServices
 
             if (doesINSSExist)
             {
-                throw new UserException("INSS already exists");
+				_logger.LogError(Guid.NewGuid() + $" INSS already exists: {user.INSS}");
+				throw new UserException("INSS already exists");
             }
 
             if (doesEmailExist)
             {
-                throw new UserException("Email already exists");
+				_logger.LogError(Guid.NewGuid() + $" Email already exists: {user.Email}");
+				throw new UserException("Email already exists");
             }
 
             UsersDatabase.users.Add(user);
@@ -56,7 +69,8 @@ namespace Digibooky.Services.UserServices
             }
             else
             {
-                throw new UserException("This user does not exist in our database");
+				_logger.LogError(Guid.NewGuid() + $" User not found: (username: {userINSS}");
+				throw new UserException("This user does not exist in our database");
             }
         }
     }
