@@ -148,7 +148,7 @@ namespace Digibooky.API.Controllers.Books
 
         [Authorize(Roles = "librarian")]
         [HttpGet]
-        [Route("[action]/{Overdue}")]
+        [Route("Overdue")]
         public ActionResult<List<OverdueBookDTO>> GetAllOverdueBooks()
         {
             return Ok(_bookMapper.ListOfOverdueBookToDTOList(_bookService.GetAllOverdueBooks()));

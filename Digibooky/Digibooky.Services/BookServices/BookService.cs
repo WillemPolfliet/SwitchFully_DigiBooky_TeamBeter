@@ -1,6 +1,7 @@
 ﻿using Digibooky.Databases;
 using Digibooky.Domain.Books;
 using Digibooky.Domain.Books.Exceptions;
+using Digibooky.Domain.Users;
 using Digibooky.Services.BookServices.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -107,10 +108,10 @@ namespace Digibooky.Services.BookServices
             {
                 if (item.ReturnDate < DateTime.Today && item.DateReturned == null)
                 {
-                    Book book = BooksDatabase.booksDb.FirstOrDefault(bookquery => bookquery.Isbn == item.Isbn);
+                    Book book = BooksDatabase.booksDb.FirstOrDefault(bookquery => bookquery.ISBN == item.Isbn);
                     User user = UsersDatabase.users.FirstOrDefault(userQuery => userQuery.INSS == item.INSS);
 
-                    overdueBooks.Add(new OverdueBook(book.Id, book.Isbn, book.Title, item.ID, item.INSS, item.Date, item.ReturnDate, item.DateReturned, user.Email));
+                    overdueBooks.Add(new OverdueBook(book.Id, book.ISBN, book.Title, item.ID, item.INSS, item.Date, item.ReturnDate, item.DateReturned, user.Email));
                 }
             }
             return overdueBooks;
