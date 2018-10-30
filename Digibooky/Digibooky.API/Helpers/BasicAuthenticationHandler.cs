@@ -41,7 +41,7 @@ namespace Digibooky.API.Helpers
 				return AuthenticateResult.Fail(Guid.NewGuid() + " Missing Authorization Header");
             }
 
-            @string user = null;
+            User user = null;
             try
             {
                 var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);

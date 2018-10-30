@@ -19,7 +19,7 @@ namespace Digibooky.Services.UserServices
 			_logger = logger;
 		}
 
-		public async Task<@string> Authenticate(string username, string password)
+		public async Task<User> Authenticate(string username, string password)
         {
             var user = await Task.Run(() => UsersDatabase.users.SingleOrDefault(userToLogin => userToLogin.Email == username && userToLogin.Password == password));
 
@@ -33,12 +33,12 @@ namespace Digibooky.Services.UserServices
             return user;
         }
 
-        public List<@string> GetAllUsers()
+        public List<User> GetAllUsers()
         {
             return UsersDatabase.users;
         }
 
-        public void Register(@string user)
+        public void Register(User user)
         {
             var doesINSSExist = UsersDatabase.users.Any(dbUser => dbUser.INSS == user.INSS);
             var doesEmailExist = UsersDatabase.users.Any(dbUser => dbUser.Email == user.Email);
@@ -58,7 +58,7 @@ namespace Digibooky.Services.UserServices
             UsersDatabase.users.Add(user);
         }
 
-        public void UpdateInformation(@string.Roles userRole, long userINSS)
+        public void UpdateInformation(User.Roles userRole, long userINSS)
         {
             var doesUserExist = UsersDatabase.users.Any(dbUser => dbUser.INSS == userINSS);
 

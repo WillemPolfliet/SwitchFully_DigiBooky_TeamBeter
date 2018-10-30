@@ -3,13 +3,13 @@ using Digibooky.Domain.Users;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using static Digibooky.Domain.Users.@string;
+using static Digibooky.Domain.Users.User;
 
 namespace Digibooky.API.Controllers.Users
 {
     public class UserMapper : IUserMapper
     {
-        public @string DTORegisterToUser(UserDTORegister userDTORegister)
+        public User DTORegisterToUser(UserDTORegister userDTORegister)
         {
             var user = UserBuilder.CreateUser()
                 .WithINSS(userDTORegister.INSS)
@@ -27,7 +27,7 @@ namespace Digibooky.API.Controllers.Users
             return user;
         }
 
-        public List<UserDTO> ListofUserToDTOList(List<@string> givenListOfUsers)
+        public List<UserDTO> ListofUserToDTOList(List<User> givenListOfUsers)
         {
             var dtoList = new List<UserDTO>();
 
@@ -39,7 +39,7 @@ namespace Digibooky.API.Controllers.Users
             return dtoList;
         }
 
-        public UserDTO UserToDTO(@string user)
+        public UserDTO UserToDTO(User user)
         {
 			return new UserDTO
 			{

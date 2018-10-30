@@ -29,7 +29,7 @@ namespace Digibooky.API.Tests.UsersController
 
 
             UsersDatabase.users.Clear();
-            var temp = new List<@string>()
+            var temp = new List<User>()
             {
                 UserBuilder.CreateUser()
                 .WithINSS(1234567891235)
@@ -37,7 +37,7 @@ namespace Digibooky.API.Tests.UsersController
                 .WithLastName("Lastname")
                 .WithEmail("user01@user.com")
                 .WithPassword("Password123")
-                .WithRole(@string.Roles.admin)
+                .WithRole(User.Roles.admin)
                 .WithStreet("Street")
                 .WithStreetNumber("5A")
                 .WithPostalCode(2800)
@@ -152,7 +152,7 @@ namespace Digibooky.API.Tests.UsersController
 
             _client.DefaultRequestHeaders.Authorization = CreateBasicHeader(username, password);
 
-            var content = JsonConvert.SerializeObject(@string.Roles.librarian);
+            var content = JsonConvert.SerializeObject(User.Roles.librarian);
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
 
             var response = await _client.PutAsync($"/api/users/{inss}", stringContent);

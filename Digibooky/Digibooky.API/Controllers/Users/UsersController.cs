@@ -38,7 +38,7 @@ namespace Digibooky.API.Controllers.Users
 
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult<@string> Register([FromBody]UserDTORegister userToRegister)
+        public ActionResult<User> Register([FromBody]UserDTORegister userToRegister)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace Digibooky.API.Controllers.Users
         [Authorize(Policy = "MustBeAdmin")]
         [HttpPut]
         [Route("{INSS}")]
-        public ActionResult<@string> UpdateUserDetails([FromQuery]@string.Roles newRole, [FromRoute] long INSS)
+        public ActionResult<User> UpdateUserDetails([FromQuery]User.Roles newRole, [FromRoute] long INSS)
         {
             try
             {

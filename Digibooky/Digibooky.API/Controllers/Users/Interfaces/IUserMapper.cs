@@ -9,8 +9,8 @@ namespace Digibooky.API.Controllers.Users.Interfaces
 {
     public interface IUserMapper
     {
-        @string DTORegisterToUser(UserDTORegister userDTORegister);
-        UserDTO UserToDTO(@string user);
-        List<UserDTO> ListofUserToDTOList(List<@string> list);
+        User DTORegisterToUser(UserDTORegister userDTORegister);
+        UserDTO UserToDTO(User user);
+        List<UserDTO> ListofUserToDTOList(List<User> list);
     }
 }
