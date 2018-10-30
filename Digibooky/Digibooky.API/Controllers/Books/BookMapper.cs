@@ -1,6 +1,8 @@
 ﻿using Digibooky.API.Controllers.Books.Interfaces;
+using Digibooky.Databases;
 using Digibooky.Domain.Books;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Digibooky.API.Controllers.Books
 {
@@ -56,5 +58,30 @@ namespace Digibooky.API.Controllers.Books
         {
             return new Book(bookDTORegister.Isbn, bookDTORegister.Title, bookDTORegister.AuthorFirstName, bookDTORegister.AuthorLastName);
         }
+
+        public List<OverdueBookDTO> ListOfOverdueBookToDTOList(List<OverdueBook> overdueBookList)
+        {
+            var overdueBookListDTO = new List<OverdueBookDTO>();
+
+            foreach (var overdueBook in overdueBookList)
+            {
+                OverdueBookDTO overdueBookDTO = new OverdueBookDTO(
+                    overdueBook.BookId,
+                    overdueBook.Isbn,
+                    overdueBook.Title,
+                    overdueBook.LendingID,
+                    overdueBook.INSS,
+                    overdueBook.Date,
+                    overdueBook.ReturnDate,
+                    overdueBook.DateReturned,
+                    overdueBook.userEmail
+                    );
+
+                overdueBookListDTO.Add(overdueBookDTO);
+            }
+
+            return overdueBookListDTO;
+        }
+
     }
 }

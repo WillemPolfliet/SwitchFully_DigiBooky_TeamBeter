@@ -17,5 +17,7 @@ namespace Digibooky.Services.BookServices.Interfaces
         void UpdateInformation(string iSBN, string title, string authorFirstName, string authorLastName);
         void Delete(string iSBN);
         void Restore(string iSBN);
+        List<OverdueBook> GetAllOverdueBooks();
+
     }
 }

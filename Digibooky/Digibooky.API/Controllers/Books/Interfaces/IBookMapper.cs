@@ -12,5 +12,6 @@ namespace Digibooky.API.Controllers.Books.Interfaces
         BookDTO BookToDTO(Book givenBook);
         BookDTODetails BookToDetailsDTO(Dictionary<Book, string> givenBook);
         Book BookDTORegisterToBook(BookDTORegister bookDTO);
+        List<OverdueBookDTO> ListOfOverdueBookToDTOList(List<OverdueBook> overdueBookList);
     }
 }
