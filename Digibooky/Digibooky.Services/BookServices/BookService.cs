@@ -97,5 +97,23 @@ namespace Digibooky.Services.BookServices
         {
             BooksDatabase.booksDb.FirstOrDefault(book => book.ISBN == iSBN).IsDeleted = false;
         }
+
+
+        public List<OverdueBook> GetAllOverdueBooks()
+        {
+            List<OverdueBook> overdueBooks = new List<OverdueBook>();
+
+            foreach (var item in LendingsDatabase.Lendings)
+            {
+                if (item.ReturnDate < DateTime.Today && item.DateReturned == null)
+                {
+                    Book book = BooksDatabase.booksDb.FirstOrDefault(bookquery => bookquery.Isbn == item.Isbn);
+                    User user = UsersDatabase.users.FirstOrDefault(userQuery => userQuery.INSS == item.INSS);
+
+                    overdueBooks.Add(new OverdueBook(book.Id, book.Isbn, book.Title, item.ID, item.INSS, item.Date, item.ReturnDate, item.DateReturned, user.Email));
+                }
+            }
+            return overdueBooks;
+        }
     }
 }
