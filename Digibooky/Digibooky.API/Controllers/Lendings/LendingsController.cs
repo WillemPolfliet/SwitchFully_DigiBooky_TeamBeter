@@ -3,6 +3,7 @@ using Digibooky.Domain.Lendings;
 using Digibooky.Domain.Lendings.Exceptions;
 using Digibooky.Services.LendingServices;
 using Digibooky.Services.LendingServices.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,8 @@ using System.Threading.Tasks;
 
 namespace Digibooky.API.Controllers.Lendings
 {
-    [Route("api/[controller]")]
+	[Authorize]
+	[Route("api/[controller]")]
     public class LendingsController : ControllerBase
     {
         private readonly ILendingService _lendingService;
@@ -26,9 +28,10 @@ namespace Digibooky.API.Controllers.Lendings
 
 
 
-        // GET: api/<controller>
-        [HttpGet]
-        public List<LendingDTO> Get()
+		// GET: api/<controller>
+		[Authorize(Policy = "MustBeLibrarian")]
+		[HttpGet]
+        public List<LendingDTO> GetAll()
         {
             var allLendings = _lendingService.GetAll();
             var allLendingDTOs = _lendingMapper.LendingListToLendingDTOList(allLendings);
@@ -36,15 +39,24 @@ namespace Digibooky.API.Controllers.Lendings
             return allLendingDTOs;
         }
 
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
+		[Authorize(Policy = "MustBeLibrarian")]
+		[HttpGet]
+		[Route("All_Overdue")]
+		public List<LendingDTO> GetAllOverdueLendings()
+		{
+			throw new NotImplementedException();
+		}
+
+		// GET api/<controller>/5
+		[HttpGet("{id}")]
         public string Get(int id)
         {
             throw new NotImplementedException();
         }
 
         // POST api/<controller>
-        [HttpPost]
+		[Authorize(Policy = "MustBeMember")]
+		[HttpPost]
         public ActionResult Lend([FromBody]LendingDTOLendingPost lendingDTOLendingPost)
         {
             try
@@ -66,7 +78,8 @@ namespace Digibooky.API.Controllers.Lendings
             }
         }
 
-        [HttpPost]
+		[Authorize(Policy = "MustBeMember")]
+		[HttpPost]
         [Route("ReturnBook")]
         public ActionResult ReturnBook([FromBody]string lendID)
         {
@@ -85,19 +98,6 @@ namespace Digibooky.API.Controllers.Lendings
 
             }
 
-        }
-
-
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

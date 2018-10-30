@@ -14,6 +14,7 @@ namespace Digibooky.Services.BookServices.Interfaces
         List<Book> FindAllBooks_SearchByISBN(string givenMatchingString);
         List<Book> FindAllBooks_SearchByAuthor(string givenMatchingString);
         void UpdateInformation(string iSBN, string title, string authorFirstName, string authorLastName);
-        List<OverdueBook> GetAllOverdueBooks();
+        void Delete(string iSBN);
+        void Restore(string iSBN);
     }
 }

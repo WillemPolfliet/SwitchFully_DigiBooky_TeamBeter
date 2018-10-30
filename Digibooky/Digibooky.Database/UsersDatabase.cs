@@ -3,33 +3,34 @@ using System.Collections.Generic;
 
 namespace Digibooky.Databases
 {
-    public static class UsersDatabase
-    {
-        public static List<User> users = new List<User>() { UserBuilder.CreateUser()
-                .WithINSS(1234567891234)
-                .WithFirstName("Firstname")
-                .WithLastName("Lastname")
-                .WithEmail("user@user.com")
-                .WithPassword("Password123")
-                .WithRole(User.Roles.admin)
-                .WithStreet("Street")
-                .WithStreetNumber("5A")
-                .WithPostalCode(2800)
-                .WithCity("Mechelen")
-                .Build(),
+	public static class UsersDatabase
+	{
+		public static List<User> users = new List<User>() { UserBuilder.CreateUser()
+				.WithINSS(1234567891234)
+				.WithFirstName("Firstname")
+				.WithLastName("Lastname")
+				.WithEmail("user@user.com")
+				.WithPassword("Password123")
+				.WithRole(User.Roles.admin)
+				.WithStreet("Street")
+				.WithStreetNumber("5A")
+				.WithPostalCode(2800)
+				.WithCity("Mechelen")
+				.Build(),
 
-            UserBuilder.CreateUser()
-                .WithINSS(1234567891234)
-                .WithFirstName("Firstname")
-                .WithLastName("Lastname")
-                .WithEmail("user1@user.com")
-                .WithPassword("Password123")
-                .WithStreet("Street")
-                .WithStreetNumber("5A")
-                .WithPostalCode(2800)
-                .WithCity("Mechelen")
-                .Build(),
-    };
-    }
+			UserBuilder.CreateUser()
+				.WithINSS(1234567891234)
+				.WithFirstName("Firstname")
+				.WithLastName("Lastname")
+				.WithEmail("user1@user.com")
+				.WithPassword("Password123")
+			.WithRole(User.Roles.member)
+				.WithStreet("Street")
+				.WithStreetNumber("5A")
+				.WithPostalCode(2800)
+				.WithCity("Mechelen")
+				.Build(),
+	};
+	}
 }
 

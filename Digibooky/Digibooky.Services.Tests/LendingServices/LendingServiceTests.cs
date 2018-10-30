@@ -16,7 +16,7 @@ namespace Digibooky.Services.Tests.LendingServices
         {
             BooksDatabase.booksDb.Add(new Domain.Books.Book("1231231231231", "title", "G","J"));
             long inss = UsersDatabase.users[0].INSS;
-            string isbn = BooksDatabase.booksDb[0].Isbn;
+            string isbn = BooksDatabase.booksDb[0].ISBN;
             int countBeforeLending = LendingsDatabase.Lendings.Count;
 
             LendingService lendingService = new LendingService();
@@ -81,5 +81,20 @@ namespace Digibooky.Services.Tests.LendingServices
 			Assert.Equal("Book is currently not available, it is already lent out.", exception.Message);
         }
 
-	}
+        [Fact]
+        public void GivenABooksDBAndAUserDB_WhenDeleteABookAndTryLendingThatBook_ThenGetException()
+        {
+            BooksDatabase.booksDb.Add(new Domain.Books.Book("1231231231231", "title", "G", "J") { IsDeleted = true});
+
+            LendingService lendingService = new LendingService();
+            Action act = () => lendingService.LendBook(1234567891234, "1231231231231");
+
+            //then
+            var exception = Assert.Throws<LendingException>(act);
+            Assert.Equal("Book ISBN does not exist", exception.Message);
+        }
+
+
+    }
+
 }

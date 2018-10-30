@@ -1,7 +1,6 @@
 ﻿using Digibooky.Databases;
 using Digibooky.Domain.Books;
 using Digibooky.Domain.Books.Exceptions;
-using Digibooky.Domain.Users;
 using Digibooky.Services.BookServices.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -11,19 +10,16 @@ using System.Text.RegularExpressions;
 
 namespace Digibooky.Services.BookServices
 {
-
-
-
     public class BookService : IBookService
     {
         public List<Book> GetAllBooks()
         {
-            return BooksDatabase.booksDb;
+            return BooksDatabase.booksDb.Where(book => book.IsDeleted == false).ToList();
         }
 
         public Book GetBookByISBN(string givenISBN)
         {
-            var selectedBook = BooksDatabase.booksDb.FirstOrDefault(book => book.Isbn == givenISBN);
+            var selectedBook = BooksDatabase.booksDb.FirstOrDefault(book => book.ISBN == givenISBN && book.IsDeleted == false);
             if (selectedBook == null)
             { throw new BookException("This ISBN can not be found"); }
             else
@@ -42,7 +38,7 @@ namespace Digibooky.Services.BookServices
         }
         public List<Book> FindAllBooks_SearchByISBN(string givenMatchingString)
         {
-            return FindAllBooks(givenMatchingString, book => book.Isbn.Contains(givenMatchingString));
+            return FindAllBooks(givenMatchingString, book => book.ISBN.Contains(givenMatchingString));
         }
         public List<Book> FindAllBooks_SearchByAuthor(string givenMatchingString)
         {
@@ -56,7 +52,7 @@ namespace Digibooky.Services.BookServices
 
             foreach (var book in BooksDatabase.booksDb)
             {
-                if (ValueToCheck(book))
+                if (ValueToCheck(book) && book.IsDeleted == false)
                 {
                     listToReturn.Add(book);
                 }
@@ -66,23 +62,23 @@ namespace Digibooky.Services.BookServices
 
         public void UpdateInformation(string iSBN, string title, string authorFirstName, string authorLastName)
         {
-            var doesBookExist = BooksDatabase.booksDb.Any(dbBook => dbBook.Isbn == iSBN);
+            var doesBookExist = BooksDatabase.booksDb.Any(dbBook => dbBook.ISBN == iSBN);
 
             if (doesBookExist)
             {
                 if (!string.IsNullOrWhiteSpace(title))
                 {
-                    BooksDatabase.booksDb.First(dbBook => dbBook.Isbn == iSBN)
+                    BooksDatabase.booksDb.First(dbBook => dbBook.ISBN == iSBN)
                          .Title = title;
                 }
-                if (!string.IsNullOrWhiteSpace(authorFirstName))
+                if(!string.IsNullOrWhiteSpace(authorFirstName))
                 {
-                    BooksDatabase.booksDb.First(dbBook => dbBook.Isbn == iSBN)
+                    BooksDatabase.booksDb.First(dbBook => dbBook.ISBN == iSBN)
                          .AuthorFirstName = authorFirstName;
                 }
                 if (!string.IsNullOrWhiteSpace(authorLastName))
                 {
-                    BooksDatabase.booksDb.First(dbBook => dbBook.Isbn == iSBN)
+                    BooksDatabase.booksDb.First(dbBook => dbBook.ISBN == iSBN)
                          .AuthorLastName = authorLastName;
                 }
             }
@@ -92,22 +88,14 @@ namespace Digibooky.Services.BookServices
             }
         }
 
-        public List<OverdueBook> GetAllOverdueBooks()
+        public void Delete(string iSBN)
         {
-            List<OverdueBook> overdueBooks = new List<OverdueBook>();
-
-            foreach (var item in LendingsDatabase.Lendings)
-            {
-                if (item.ReturnDate < DateTime.Today && item.DateReturned == null)
-                {
-                    Book book = BooksDatabase.booksDb.FirstOrDefault(bookquery => bookquery.Isbn == item.Isbn);
-                    User user = UsersDatabase.users.FirstOrDefault(userQuery => userQuery.INSS == item.INSS);
-
-                    overdueBooks.Add(new OverdueBook(book.Id, book.Isbn, book.Title, item.ID, item.INSS, item.Date, item.ReturnDate, item.DateReturned, user.Email));
-                 }
-            }
-            return overdueBooks;
+            BooksDatabase.booksDb.FirstOrDefault(book => book.ISBN == iSBN).IsDeleted = true;
         }
 
+        public void Restore(string iSBN)
+        {
+            BooksDatabase.booksDb.FirstOrDefault(book => book.ISBN == iSBN).IsDeleted = false;
+        }
     }
 }

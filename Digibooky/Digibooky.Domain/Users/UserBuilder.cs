@@ -11,12 +11,13 @@ namespace Digibooky.Domain.Users
     public class UserBuilder 
     {
         private const int REQUIRED_PASSWORD_LENGTH = 8;
+
         public long INSS { get; private set; } //long or string?
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
         public string Email { get; private set; }
         public string Password { get; private set; }
-        public List<Roles> UserRoles { get; private set; }
+        public Roles UserRoles { get; private set; }
         public string Street { get; private set; }
         public string StreetNumber { get; private set; }
         public int PostalCode { get; private set; }
@@ -106,13 +107,9 @@ namespace Digibooky.Domain.Users
             return this;
         }
 
-        public UserBuilder WithRole(User.Roles role = Roles.member)
+        public UserBuilder WithRole(Roles role = Roles.member)
         {
-            this.UserRoles = new List<Roles>() { User.Roles.member };
-            if (role != Roles.member)
-            {
-                UserRoles.Add(role);
-            }
+			this.UserRoles = role;
             return this;
         }
         

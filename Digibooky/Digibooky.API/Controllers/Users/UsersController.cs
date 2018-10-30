@@ -4,6 +4,7 @@ using Digibooky.Domain.Users.Exceptions;
 using Digibooky.Services.UserServices.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 
@@ -16,19 +17,22 @@ namespace Digibooky.API.Controllers.Users
     {
         private readonly IUserService _userService;
         private readonly IUserMapper _userMapper;
+		private readonly ILogger<UsersController> _logger;
 
-        public UsersController(IUserService userService, IUserMapper userMapper)
+		public UsersController(IUserService userService, IUserMapper userMapper, ILogger<UsersController> logger)
         {
             _userService = userService;
             _userMapper = userMapper;
+			_logger = logger;
         }
 
         public object UserDatabase { get; private set; }
 
-        [AllowAnonymous]
+        [Authorize(Policy = "MustBeAdmin")]
         [HttpGet]
         public ActionResult<List<UserDTO>> GetAllUsers()
         {
+			_logger.LogInformation("Get all users");
             return Ok(_userMapper.ListofUserToDTOList(_userService.GetAllUsers()));
         }
 
@@ -43,15 +47,18 @@ namespace Digibooky.API.Controllers.Users
             }
             catch (UserException userEx)
             {
+				_logger.LogError(Guid.NewGuid() + userEx.Message);
                 return BadRequest(userEx.Message);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+				_logger.LogError(Guid.NewGuid() + ex.Message);
+
+				return BadRequest(ex.Message);
             }
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Policy = "MustBeAdmin")]
         [HttpPut]
         [Route("{INSS}")]
         public ActionResult<User> UpdateUserDetails([FromQuery]User.Roles newRole, [FromRoute] long INSS)
@@ -63,11 +70,15 @@ namespace Digibooky.API.Controllers.Users
             }
             catch (UserException userEx)
             {
-                return BadRequest(userEx.Message);
+				_logger.LogError(Guid.NewGuid() + userEx.Message);
+
+				return BadRequest(userEx.Message);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+				_logger.LogError(Guid.NewGuid() + ex.Message);
+
+				return BadRequest(ex.Message);
             }
         }
     }

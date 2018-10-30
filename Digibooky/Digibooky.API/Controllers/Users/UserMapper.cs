@@ -41,14 +41,14 @@ namespace Digibooky.API.Controllers.Users
 
         public UserDTO UserToDTO(User user)
         {
-            return new UserDTO
-            {
-                INSS = user.INSS,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                Password = user.Password,
-                UserRole = PrintAsString(user.UserRoles),
+			return new UserDTO
+			{
+				INSS = user.INSS,
+				FirstName = user.FirstName,
+				LastName = user.LastName,
+				Email = user.Email,
+				Password = user.Password,
+				UserRole = user.UserRoles.ToString(),
                 Street = user.Street,
                 StreetNumber = user.StreetNumber,
                 PostalCode = user.PostalCode,

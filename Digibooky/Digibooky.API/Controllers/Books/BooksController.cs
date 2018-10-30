@@ -1,15 +1,11 @@
 ﻿using Digibooky.API.Controllers.Books.Interfaces;
 using Digibooky.Domain.Books;
 using Digibooky.Domain.Books.Exceptions;
-using Digibooky.Services.BookServices;
 using Digibooky.Services.BookServices.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Digibooky.API.Controllers.Books
 {
@@ -60,7 +56,10 @@ namespace Digibooky.API.Controllers.Books
         public ActionResult<List<BookDetailsDTO>> SearchByTitle([FromRoute]string title)
         {
             var books = _bookService.FindAllBooks_SearchByTitle(title);
-            return Ok(books);
+            if (books.Count == 0)
+            { return NotFound("No ItemsFound"); }
+            else
+            { return Ok(books); }
         }
 
         [AllowAnonymous]
@@ -69,12 +68,26 @@ namespace Digibooky.API.Controllers.Books
         public ActionResult<List<BookDetailsDTO>> SearchByISBN([FromRoute]string ISBN)
         {
             var books = _bookService.FindAllBooks_SearchByISBN(ISBN);
-            return Ok(books);
+            if (books.Count == 0)
+            { return NotFound("No ItemsFound"); }
+            else
+            { return Ok(books); }
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("[action]/{author}")]
+        public ActionResult<List<BookDetailsDTO>> SearchByAuthor([FromRoute]string author)
+        {
+            var books = _bookService.FindAllBooks_SearchByAuthor(author);
+            if (books.Count == 0)
+            { return NotFound("No ItemsFound"); }
+            else
+            { return Ok(books); }
         }
 
-        [Authorize(Roles = "admin, librarian")]
+        [Authorize(Policy = "MustBeAdmin")]
         [HttpPost]
-        public ActionResult<Book> Register([FromBody] BookDTORegister bookDTORegister)
+        public ActionResult<Book> RegisterABook([FromBody] BookDTORegister bookDTORegister)
         {
             try
             {
@@ -92,24 +105,47 @@ namespace Digibooky.API.Controllers.Books
             }
         }
 
-        [Authorize(Roles = "librarian")]
-        [HttpPut]
+		[Authorize(Policy = "MustBeAdmin")]
+		[HttpPut]
         [Route("[action]/{ISBN}")]
         public ActionResult<Book> UpdateInformation([FromRoute]string ISBN, [FromBody] BookDTOUpdate bookDTOUpdate)
         {
-            var title = bookDTOUpdate.Title;
-            var authorFirstName = bookDTOUpdate.AuthorFirstName;
-            var authorLastName = bookDTOUpdate.AuthorLastName;
-            _bookService.UpdateInformation(ISBN, title, authorFirstName, authorLastName);
+            try
+            {
+                var title = bookDTOUpdate.Title;
+                var authorFirstName = bookDTOUpdate.AuthorFirstName;
+                var authorLastName = bookDTOUpdate.AuthorLastName;
+                _bookService.UpdateInformation(ISBN, title, authorFirstName, authorLastName);
+                return Ok();
+            }
+            catch (BookException bookEx)
+            {
+                return BadRequest(bookEx.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize(Policy = "MustBeAdmin")]
+        [HttpDelete]
+        [Route("[action]/{ISBN}")]
+        public ActionResult<Book> Delete([FromRoute]string ISBN)
+        {
+            _bookService.Delete(ISBN);
             return Ok();
         }
 
-        [Authorize(Roles = "librarian")]
-        [HttpGet]
-        [Route("[action]/{Overdue}")]
-        public ActionResult<List<OverdueBookDTO>> GetAllOverdueBooks()
+        [Authorize(Policy = "MustBeAdmin")]
+        [HttpPut]
+        [Route("[action]/{ISBN}")]
+        public ActionResult<Book> Restore([FromRoute]string ISBN)
         {
-            return Ok(_bookMapper.ListOfOverdueBookToDTOList(_bookService.GetAllOverdueBooks()));
+            _bookService.Restore(ISBN);
+            return Ok();
         }
+
+
     }
 }

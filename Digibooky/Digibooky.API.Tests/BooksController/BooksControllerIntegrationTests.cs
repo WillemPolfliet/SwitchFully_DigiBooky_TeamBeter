@@ -54,12 +54,12 @@ namespace Digibooky.API.Tests.BooksController
         [Fact]
         public async Task GetSpecificBookByValidISBN_WhenGiveListOfBook_ThenReturnSpecificBook()
         {
-            var response = await _client.GetAsync($"/api/books/{BooksDatabase.booksDb[0].Isbn}");
+            var response = await _client.GetAsync($"/api/books/{BooksDatabase.booksDb[0].ISBN}");
             var responseString = await response.Content.ReadAsStringAsync();
             var bookDTO = JsonConvert.DeserializeObject<BookDTO>(responseString);
 
             Assert.True(response.IsSuccessStatusCode);
-            Assert.Equal(BooksDatabase.booksDb[0].Isbn, bookDTO.Isbn);
+            Assert.Equal(BooksDatabase.booksDb[0].ISBN, bookDTO.Isbn);
         }
 
         [Fact]

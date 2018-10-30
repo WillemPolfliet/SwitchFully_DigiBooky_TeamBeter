@@ -25,7 +25,7 @@ namespace Digibooky.API.Controllers.Books
         {
             return new BookDTO
             {
-                Isbn = givenBook.Isbn,
+                Isbn = givenBook.ISBN,
                 Title = givenBook.Title,
                 AuthorFirstName = givenBook.AuthorFirstName,
                 AuthorLastName = givenBook.AuthorLastName
@@ -36,7 +36,7 @@ namespace Digibooky.API.Controllers.Books
         {
             return new BookDetailsDTO
             {
-                Isbn = givenBook.Isbn,
+                Isbn = givenBook.ISBN,
                 Title = givenBook.Title,
                 FirstNameAuthor = givenBook.AuthorFirstName,
                 LastNameAuthor = givenBook.AuthorLastName
